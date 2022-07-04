@@ -1,0 +1,6 @@
+Corpus	Size	Size_print
+ind_news_2008_300K-sentences.txt	5875376	5875376
+ind_news_2009_300K-sentences.txt	5868276	5868276
+ind_news_2010_300K-sentences.txt	5874158	5874158
+ind_news_2011_300K-sentences.txt	5852211	5852211
+ind_news_2012_300K-sentences.txt	5873523	5873523
