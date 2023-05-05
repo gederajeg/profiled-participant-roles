@@ -1,0 +1,846 @@
+---
+title: "Penonjolan peran semantis dan konstruksi gramatikal pasangan verba -*i* dan -*kan*: Kajian korpus terhadap *menawari*/*menawarkan*"
+date: "Date created: 2022-06-21; Update: `r Sys.Date()`"
+output:
+  officedown::rdocx_document:
+    reference_docx: officedown-test-2-template.docx
+    plots:
+      caption:
+        style: Image Caption
+        pre: 'Gambar '
+        sep: ': '
+        fp_text: !expr officer::fp_text_lite(bold = FALSE)
+  bookdown::html_document2:
+    toc: FALSE
+link-citations: yes
+bibliography: biblio.bib
+csl: 'apa.csl'
+---
+
+```{r setup, include = FALSE, echo = FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      fig.cap = TRUE,
+                      fig.width = 6,
+                      fig.asp = 0.618,
+                      out.width = 0.7,
+                      fig.align = "center",
+                      dpi = 300,
+                      fig.path = "plots/")
+library(tidyverse)
+library(officedown)
+library(officer)
+library(glossr)
+library(readxl)
+library(RColorBrewer)
+library(gridExtra)
+library(ggtext)
+use_glossr(styling = list(first = "i"))
+ft_frame_element <- fp_text(color = "black", font.size = 10, font.family = "Consolas")
+# Linguistik Korpus (LKorp) dapat dicirikan dari sejumlah dimensi, utamanya (i) jenis data yang digunakan (mis. teks tulis atau lisan); (ii) peranti teknologi dalam menyimpan dan mengakses data tersebut (mis. peranti konkordansi seperti *AntConc* [@anthony_antconc_2019] atau peranti pemrograman seperti R [@rcoreteam_2020]); dan (iii) teknik analitis tertentu yang disediakan oleh peranti teknologi tersebut (mis. daftar frekuensi, kata kunci dan konteksnya [*keyword in context*], kolokasi) [@gries_2009]. Akan tetapi, 
+
+# Overall, this study further demonstrates the insights of corpus-based analysis for enriching the description of classic (morpho)syntactic topic in Indonesian.
+# Pada tataran yang lebih luas, makalah ini menunjukkan bahwa kajian korpus kuantitatif dapat memperkaya deskripsi atas isu klasik dalam ranah (morfo)sintaksis bahasa Indonesia.
+```
+
+**Abstract** `r fp_par(text.align = "center", line_spacing = 1)`
+
+::: {custom-style="First Paragraph"}
+
+This paper presents quantitative corpus analyses of the profiled participant/semantic roles and grammatical constructions of semantically similar Indonesian verb-pair suffixed with -*i* and -*kan*. *Menawari*/*menawarkan* pair is chosen as a case study. Couched within the Construction Grammar and Frame Semantics theories, the analyses revealed that the verb pair, albeit denotationally similar, differs regarding the profiled semantic roles within the preferred grammatical constructions of each verb. *Menawari* strongly profiles `r ftext("Offerer", ft_frame_element)`, `r ftext("Potential_recipient", ft_frame_element)` and `r ftext("Theme", ft_frame_element)` in Double-Object Construction, while *menawarkan* only profile `r ftext("Offerer", ft_frame_element)` and `r ftext("Theme", ft_frame_element)` in Monotransitive Construction. Although the quantitative findings partly confirm the theoretical hypothesis of the constructional behaviours for *menawari*/*menawarkan*, the study also discovers previously unpredicted constructional variation, particularly for *menawari*. Such variation has typological implication for the grammatical alignments of ditransitive verbs and raises an intriguing question regarding constructional contamination by the constructional profile of the more frequent form (i.e., *menawarkan*) that is related paradigmatically to *menawari*.
+
+**Keywords**: semantic role, Construction Grammar, Quantitative Corpus Linguistics, Frame Semantics, ditransitivity
+
+:::
+
+
+**Abstract** `r fp_par(text.align = "center", line_spacing = 1, padding.top = 15)`
+
+::: {custom-style="First Paragraph"}
+
+Makalah ini menyajikan kajian korpus kuantitatif terhadap penonjolan peran semantis dan konstruksi gramatikal pasangan verba bahasa Indonesia berakhiran -*i* dan -*kan* yang mirip secara semantis. Pasangan *menawari*/*menawarkan* dijadikan contoh studi kasus. Dibingkai dalam teori Gramatika Konstruksional (*Construction Grammar*) dan Bingkai Semantik (*Frame Semantics*), makalah ini menemukan perbedaan tingkat penonjolan peran semantis di antara kedua verba yang berkaitan dengan preferensi konstruksi gramatikal yang merealisasikan peran semantis verba tersebut. *Menawari* menonjolkan peran `r ftext("Agen_penawaran", ft_frame_element)`, `r ftext("Calon_penerima", ft_frame_element)` dan `r ftext("Tema", ft_frame_element)` dalam Konstruksi Objek Ganda, sedangkan *menawarkan* hanya menonjolkan `r ftext("Agen_penawaran", ft_frame_element)` dan `r ftext("Tema", ft_frame_element)` dalam Konstruksi Monotransitif. Meskipun sebagian temuan ini mendukung hipotesis dari kajian terdahulu terkait perilaku konstruksional kedua verba, ditemukan pula variasi terhadap konstruksi gramatikal untuk *menawari*. Variasi yang tidak diprediksi oleh kajian sebelumnya ini membawa implikasi tipologis terkait tipologi aliansi gramatikal verba dwitransitif dan mengangkat isu menarik terkait kontaminasi konstruksional oleh perilaku konstruksional pasangan verba yang lebih kerap frekuensinya (yaitu, *menawarkan*) namun masih terkait secara paradigmatis dengan *menawari*. 
+
+**Kata-kata kunci**: peran semantis, Gramatika Konstruksional, Linguistik Korpus Kuantitatif, Bingkai Semantik, kedwitransitifan
+
+:::
+
+# Pendahuluan
+
+Menurut Stefanowitsch [-@stefanowitsch_2011, hlm. 259] "[l]inguistik korpus merupakan suatu kajian terhadap pertanyaan linguistik yang telah dirumuskan berdasarkan frekuensi kemunculan relatif di dalam suatu korpus bahasa."^[Batasan ini diterjemahkan dari versi bahasa Inggrisnya: "*Corpus linguistics is the investigation of linguistic research questions that have been formulated in terms of conditional frequencies of occurrence in a linguistic corpus.*" [@stefanowitsch_2011, hlm. 259].] Batasan tersebut mengindikasikan bahwa linguis korpus berangkat dari pertanyaan penelitian yang (i) dibangun dalam suatu konteks teori linguistik (atau, permasalahan linguistik), dan (ii) dirumuskan sedemikian rupa berdasarkan frekuensi ke(tidak)munculan suatu unsur linguistik, yang juga dapat dikaitkan dengan unsur (ekstra-)linguistik lain; contohnya mengkaji distribusi bentuk morfologis verba terkait makna verba dalam konteks alternasi diatesis bahasa Indonesia (BInd) [@rajeg_2020]. Perumusan kuantitatif atas permasalahan linguistik tersebut dapat berupa pertanyaan, seperti "seberapa sering fitur linguistik X muncul dalam kondisi/konteks K?", atau hipotesis, seperti "fitur linguistik X (dibandingkan Y) lebih sering digunakan dalam kondisi/konteks K" [@stefanowitsch_2011, hlm. 259]. Selanjutnya, peneliti perlu mencari cara guna menangkap frekuensi unsur linguistik tersebut dari korpus [@gries_2009, hlm. 2]. Secara umum, Linguistik Korpus (disingkat LKorp) dipandang sebagai suatu metodologi, layaknya metode linguistik lain, seperti menilai keberterimaan struktur gramatika oleh penutur asli (*grammaticality judgement*) [@fillmore_kay_1995, hlm. 12; @gries_2013, hlm. 96]. 
+
+Penting untuk diperhatikan bahwa batasan LKorp di atas tidak mencerminkan suatu pandangan teori linguistik tertentu maupun klaim atas hakikat (sistem ke)bahasa(an) [@stefanowitsch_2011, hlm. 260]. Tentunya akan ada keragaman dalam lingkup permasalahan yang dapat dikaji dengan LKorp, tergantung posisi teoretis yang dianut ataupun kesesuaian asumsi teoretis dan hasil yang diberikan dari analisis korpus. Contohnya, jika posisi teoretis yang dianut menyatakan bahwa pengetahuan bahasa tidak berhubungan dengan perilaku/pemakaian bahasa, maka merumuskan masalah penelitian dalam bingkai kuantitatif (berdasarkan frekuensi) akan menjadi tidak bermakna [@stefanowitsch_2011, hlm. 260]. Sebaliknya, jika peneliti berkeyakinan akan adanya hubungan antara pengetahuan dan pemakaian bahasa [@langacker_1988; @barlow_usage-based_2000; @croft_2001], maka seringnya rumusan masalah (linguistik) hanya akan dapat dioperasionalkan berdasarkan frekuensi [@stefanowitsch_2011, hlm. 260]. Frekuensi ke(tidak)munculan fenomena linguistik dari korpus [@gries_2013] menjadi data empiris lazim bagi kajian linguistik dalam bingkai teori Gramatika Konstruksional (*Construction Grammar* [CxG]) (dibahas lebih lanjut pada §[\@ref(CxG)](#CxG)) [mis. @langacker_1987; @lakoff_1987; @fillmore_regularity_1988; @goldberg_1995; @croft_2001; @fillmore_kay_1995; untuk ulasan terkini, lihat @goldberg_2013; @hilpert_constructional_2020; untuk ulasan dan/atau penerapan CxG dalam BInd, lihat @rajeg_mempertemukan_2017; @rajeg_2022; @rajeg_meninjau_2023]. 
+
+Makalah ini mencontohkan bagaimana data frekuensi ke(tidak)munculan suatu unsur linguistik dalam korpus dapat dimanfaatkan untuk mengkaji fenomena (morfo)sintaksis BInd dalam bingkai CxG. Fenomena yang dikaji adalah penonjolan "peran partisipan verba" (*participant roles of verbs*) [@goldberg_1995, hlm. 44] (lihat §[\@ref(ProfiledParticipantRoles)](#ProfiledParticipantRoles)) dan realisasi sintaksis peran partisipan (semantis)^[Istilah "peran partisipan verba" akan disebut silih berganti dengan "peran semantis" [diadaptasi dari @goldberg_fitting_2014, hlm. 126] atau, singkatnya, "peran".] tersebut dalam konstruksi gramatikal [@langacker_1991, hlm. 343; @fillmore_kay_1995, hlm. 267-268; @fillmore_valency_2003, hlm. 458; @fillmore_2014, hlm. 123; @goldberg_fitting_2014, hlm. 123-126]. Sebagai studi kasus, makalah ini mengkaji pasangan verba berakhiran -*i* dan -*kan*, yaitu *menawari* dan *menawarkan* dalam BInd. Kedua verba ini dipilih karena digunakan oleh Sneddon [-@sneddon_1996, hlm. 96] dalam menjelaskan perbedaan sintaksis dan semantis pasangan verba -*i* dan -*kan* yang memiliki rujukan semantis/makna yang mirip [lihat juga @kaswanti_1997, hlm. 235-236] (§[\@ref(hipotesis)](#hipotesis)). Model studi kali ini dapat diterapkan pada pasangan verba -*i*/-*kan* lainnya.
+
+Untuk *menawari*/*menawarkan*, secara teoretis, perbedaan yang ditampilkan oleh Sneddon [-@sneddon_1996, hlm. 96] meliputi dua hal, yang dalam makalah ini ingin diuji berdasarkan data korpus kuantitatif. Perihal pertama (§[\@ref(profiling)](#profiling)) adalah peran mana di antara `r ftext("Calon_penerima", ft_frame_element)` atau `r ftext("Benda yang diberikan/Tema", ft_frame_element)` yang mengisi slot objek langsung kedua verba; untuk *menawari*, peran `r ftext("Calon_penerima", ft_frame_element)` yang diasumsikan mengisi slot objek langsung (perhatikan contoh (@dobj-cxn-menawari) berikut) sedangkan untuk *menawarkan*, peran `r ftext("Benda yang diberikan/Tema", ft_frame_element)` yang mengisi objek langsungnya (contoh (@dative-cxn-menawarkan)) [@sneddon_1996, hlm. 96; bdk. @arka_linguistic_2009; @kaswanti_1997, hlm. 236]. Perihal kedua adalah implikasi dari perihal pertama terkait tipe konstruksi gramatikal klausa dengan pasangan verba tersebut (§[\@ref(konstruksi)](#konstruksi)); tipe konstruksi yang dimaksud adalah **Konstruksi Objek Ganda** (*Double Object Construction*) [@malchukov_ditransitive_2010, hlm. 4; @haspelmath_ditransitive_2013] (perhatikan contoh (@dobj-cxn-memberi) dengan verba *memberi* dan (@dobj-cxn-menawari) dengan *menawari*) dan **Konstruksi Monotransitif Oblik** [bdk. @malchukov_ditransitive_2010, hlm. 3; @haspelmath_ditransitive_2013] (perhatikan contoh (@dative-cxn-memberi) dengan *memberi* dan (@dative-cxn-menawarkan) dengan *menawarkan*).
+
+(@dobj-cxn-menawari) Mereka *menawari* [saya]~Calon_penerima~ [bantuan]~Tema~. [@sneddon_1996, hlm. 96]
+(@dobj-cxn-memberi) Mereka tak *memberi* [saya]~Penerima~ [kesempatan lewat]~Tema~. (ind_news_2009_300K:60759).
+(@dative-cxn-menawarkan) Mereka *menawarkan* [bantuan]~Tema~ *kepada* [saya]~Calon_penerima~. [@sneddon_1996, hlm. 96]
+(@dative-cxn-memberi) Ato *memberi* [uang]~Tema~ *pada* [Mat Kumis]~Penerima~ (ind_newscrawl_2011_1M:239321)
+
+```{r double-object-memberi, eval = FALSE, include = FALSE}
+as_gloss(
+  "Mereka tak memberi saya kesempatan lewat",
+  "3PL NEG give 1SG chance pass",
+  translation = "They did not give me a chance to pass by",
+  label = "dobj-cxn-memberi",
+  source = "ind_news_2009_300K:60759"
+)
+```
+
+```{r double-object-menawari, eval = FALSE, include = FALSE}
+as_gloss(
+  "Mereka men-(t)awar-i saya bantuan.",
+  "3PL AV-bid-APPL 1SG help",
+  translation = "They offered me help.",
+  label = "dobj-cxn-menawari",
+  source = "Sneddon (1996: 96)"
+)
+```
+
+```{r dative-object-memberi, eval = FALSE, include = FALSE}
+as_gloss(
+  "Ato memberi uang pada Mat Kumis",
+  "3SG give money LOC NAME NAME",
+  translation = "Ato gives money to Mat Kumis",
+  label = "dative-cxn-memberi",
+  source = "ind_newscrawl_2011_1M:239321"
+)
+```
+
+```{r dative-object-menawarkan, eval = FALSE, include = FALSE}
+as_gloss(
+  "Mereka men-(t)awar-kan bantuan kepada saya.",
+  "3SG AV-bid-APPL help DIR 1SG",
+  translation = "They offered help to me",
+  label = "dative-cxn-menawarkan",
+  source = "Sneddon (1996: 96)"
+)
+```
+
+Selanjutnya akan diulas dalil mendasar dari CxG (§[\@ref(CxG)](#CxG)) sebelum menjelaskan lebih lanjut konsep makna verba (§[\@ref(FrameSemantics)](#FrameSemantics)) dan peran menonjol (§[\@ref(ProfiledParticipantRoles)](#ProfiledParticipantRoles)) dalam CxG. Pembahasan tersebut kemudian dikaitkan dengan implementasinya dalam menguji hipotesis peran menonjol dan tipe konstruksi gramatikal untuk *menawari* dan *menawarkan* (§[\@ref(hipotesis)](#hipotesis)).
+
+# Landasan Teori {#teori}
+
+## Gramatika Konstruksional (CxG) {#CxG}
+
+Gramatika Konstruksional (CxG) adalah teori bahasa yang mengkaji khasanah kebahasaan penutur suatu bahasa [@hilpert_constructional_2020]. Salah satu dalil kunci dalam CxG adalah bahwa (tata)bahasa terbangun dari jejaring "konstruksi", yang dibatasi sebagai keberpasangan antara bentuk dan makna (*form-meaning/function pairing*), atau unit simbolis [@goldberg_2006, hlm. 5; @croft_2001, hlm. 18; @langacker_1987, hlm. 76]. 
+
+Dalam CxG, konstruksi membentuk suatu rentangan yang dicirikan berdasarkan tiga dimensi. Dimensi pertama adalah **keskematisan/kespesifikan** (*schematicity*/*specificity*) suatu konstruksi. Berdasarkan dimensi pertama ini, terdapat konstruksi yang sepenuhnya skematis/abstrak (mis. pola struktur-argumen konstruksi transitif), yang semi spesifik dengan satu slot skematis (mis. "Beberapa NOMINA~waktu~ (yang) lalu"), maupun yang sepenuhnya spesifik/substantif secara leksikal (mis. peribahasa "Tak ada gading yang tak retak"). Dimensi kedua adalah **kompleksitas** suatu konstruksi (mis. dari morfem, kata, hingga konstruksi gramatikal multi kata seperti frasa ataupun klausa). Dimensi ketiga adalah **kelaziman**/**keterpatrian** (*conventionality*/*entrenchment*) suatu konstruksi (mis. penggunaan "membuat" sebagai komponen konstruksi kausatif analitis) atau **kebaharuan**/**kreativitas** (*novelty*/*creativity*) suatu konstruksi (mis. "mohon izin *off cam*(*era*)"^[https://www.google.com/search?client=safari&rls=en&q=%22mohon+izin+off+cam%22&ie=UTF-8&oe=UTF-8; diakses pada 3 Juli 2022, 07.17 WITA.], "Aku bertemu denganmu saat *20 kg yang lalu*, dan sebaliknya kamu."^[http://www.petaperjalanan.com/20-kg-yang-lalu/; diakses pada 3 Juli 2022, 07.22 WITA.]) [@croft_2001, hlm. 17; @goldberg_2006, hlm. 5; @langacker_1987, hlm. 59, 62, 71]. 
+
+Frekuensi juga menentukan status konstruksi unit-unit linguistik [@goldberg_2006, hlm. 5]. Hal ini menjadikan LKorp sebagai habitat metodologis alamiah untuk kajian CxG. CxG sendiri merupakan cabang dari Linguistik Kognitif (LKog) [@croft_cruse_2004], yang memandang erat hubungan dialektik antara pengetahuan bahasa dan pemakaian bahasa; pandangan ini diistilahkan dengan *usage-based model of language* (UBL) [@langacker_1987, hlm. 46, 494; @langacker_1988; @barlow_usage-based_2000; @croft_2001, hlm. 28; @tomasello_2003, hlm. 5-6, 105-108; @croft_cruse_2004, hlm. 291; @goldberg_2013, hlm. 26-28; @bybee_usagebased_2013]. Pandangan fungsional UBL tersebut secara alamiah bertalian dengan intisari dari LKorp yang mengkaji data pemakaian bahasa alamiah guna membangun model khasanah kebahasaan penutur. 
+
+## Bingkai Semantik (*Frame Semantics*) dan makna verba dalam Gramatika Konstruksional (CxG) {#FrameSemantics}
+
+Dalam CxG, makna verba (dan makna kata secara luas) dilandasi atas **skenario/bingkai/cakupan semantis** (*Semantic Frame*) [@goldberg_1995, hlm. 45; @fillmore_2014, hlm. 123]. Skenario/bingkai semantis merupakan komponen kunci dalam teori Bingkai Semantik (*Frame Semantics* [FSem]) [@fillmore_1982; @fillmore_1985; @fillmore_2014, hlm. 123, 126]. Bingkai semantis adalah skematisasi dari sejumlah kejadian spesifik serupa, yang merujuk pada pengetahuan terkait dunia di sekitar kita dan yang mengandung konfigurasi peran semantis (disebut *frame elements* [FE] dalam FSem) dalam skema kejadian tersebut [@fillmore_2014, hlm. 126]. Salah satu contohnya adalah aktivitas manusia mendasar yaitu bingkai semantis SERAH-TERIMA (*TRANSFER*), yang secara konseptual setidaknya melibatkan peran `r ftext("Pemberi", ft_frame_element)` (*Giver*/*Donor*), `r ftext("Penerima", ft_frame_element)` (*Recipient*), dan `r ftext("Benda yang diberikan", ft_frame_element)` (*Theme*). 
+
+Konfigurasi peran semantis tersebut mencerminkan "valensi semantis" (*semantic valence*) suatu verba [@fillmore_1982, hlm. 115; @fillmore_valency_2003, hlm. 458; @fillmore_2014, hlm. 126]. Dalam repositori bingkai semantis yang dibangun oleh **FrameNet** (FN)^[**FrameNet** (FN) merupakan implementasi leksikografis komputasional dari teori *Frame Semantics* (FSem). Repositori FN dapat diakses secara terbuka daring melalui https://framenet.icsi.berkeley.edu/fndrupal/.] [@fillmore_2014], verba *memberi* (contoh (@dobj-cxn-memberi) & (@dative-cxn-memberi)) memicu bingkai semantis PEMBERIAN (*GIVING*)^[https://framenet2.icsi.berkeley.edu/fnReports/data/frame/Giving.xml], dengan peran yang telah disebutkan pada akhir paragraf sebelumnya. *Menawari* (@dobj-cxn-menawari) dan *menawarkan* (@dative-cxn-menawarkan) sama-sama memicu bingkai semantis PENAWARAN (*OFFERING*)^[https://framenet2.icsi.berkeley.edu/fnReports/data/frame/Offering.xml]. Dalam FN, bingkai PENAWARAN dikaitkan secara semantis dengan bingkai PEMBERIAN. Namun, peran semantis dalam bingkai PENAWARAN lebih spesifik dibandingkan PEMBERIAN: `r ftext("Agen_penawaran", ft_frame_element)` (*Offerer*), `r ftext("Calon_penerima", ft_frame_element)` (*Potential_recipient*), dan `r ftext("Benda yang potensial diberikan/Tema", ft_frame_element)`^[Untuk singkatnya, peran `r ftext("Benda yang potensial diberikan", ft_frame_element)` akan disebut dengan `r ftext("Tema", ft_frame_element)`.] (*Theme*). Singkatnya, *menawari* dan *menawarkan* mirip secara semantis karena merujuk pada bingkai semantis yang sama dan secara konseptual memiliki tiga peran semantis utama (*core frame elements*).
+
+## Peran semantis menonjol {#ProfiledParticipantRoles}
+
+Dalam CxG, peran dari suatu bingkai semantis berbeda dalam hal "penonjolannya" (*profiling*) [@goldberg_1995, hlm. 44]. Peran yang secara semantis menonjol bersifat (i) wajib (*obligatorily*) dipicu dan (ii) menjadi fokus dalam skenario yang dirujuk oleh bingkai semantis tersebut; peran menonjol tersebut juga diistilahkan dengan "peran menonjol secara leksikal" (*lexically profiled roles*) [@goldberg_1995, hlm. 44], dalam arti bahwa penonjolan ini ditentukan secara semantik-leksikal dan bersifat konvensional berdasarkan sifat semantis verba tersebut [lihat juga @goldberg_fitting_2014, hlm. 124-125].
+
+Goldberg [-@goldberg_1995] mencontohkan konsep penonjolan partisipan dengan verba sinonim *rob* dan *steal* dalam bahasa Inggris (BIng)^[Untuk kajian terjemahan berbasis korpus terhadap kesepadanan konstruksional *rob* dan *steal* dalam bahasa Indonesia, lihat Rajeg dan Rajeg [-@rajeg_parallel_2022].]. Keduanya tampak mirip secara semantis karena bingkai semantisnya merujuk pada kejadian dan konfigurasi peran yang sama, yaitu kejadian seorang `r ftext("Pencuri/Perampok", ft_frame_element)` secara ilegal/tanpa permisi mengambil `r ftext("Barang", ft_frame_element)` yang dimiliki oleh `r ftext("Target_korban", ft_frame_element)` atau yang berasal dari suatu `r ftext("Target_lokasi/sumber", ft_frame_element)` [@dux_2011, hlm. 18; @stefanowitsch_2011, hlm. 260]. Akan tetapi, menurut Goldberg [-@goldberg_1995, hlm. 45], kedua verba ini berbeda dalam hal peran mana yang ditonjolkan secara semantik-leksikal, sehingga tercermin pada perbedaan realisasi sintaksis peran menonjol tersebut. Perhatikan contoh (@rob)a dan (@steal)a berikut.
+
+(@rob) [a] *Jesse __robbed__ [the rich]~Target_korban~ (of [all their money]~Barang~).* [@goldberg_1995, hlm. 45]
+
+[b] *_Jesse __robbed__ a million dollars (from the rich)_. [@goldberg_1995, hlm. 45] `r fp_par(padding.left = 36, line_spacing = 1)`
+
+
+```{r rob, eval = FALSE, include = FALSE}
+as_gloss(
+  "a. Jesse robbed the rich (of all their money).",
+  translation = "b. *Jesse robbed a million dollars (from the rich)",
+  label = "rob",
+  trans_quotes = "",
+  source = "Goldberg (1995: 45)"
+)
+```
+
+(@steal) [a] *Jesse __stole__ [the money]~Barang~ (from [the rich]~Target_korban~).* [@goldberg_1995, hlm. 45]
+
+[b] *_Jesse __stole__ the rich (of money)_. [@goldberg_1995, hlm. 45] `r fp_par(padding.left = 36, line_spacing = 2)`
+
+```{r steal, eval = FALSE, include = FALSE}
+as_gloss(
+  "a. Jesse stole money (from the rich).",
+  translation = "b. *Jesse stole the rich (of money).",
+  label = "steal",
+  trans_quotes = "",
+  source = "Goldberg (1995: 45)"
+)
+```
+
+::: {custom-style="First Paragraph"}
+
+Menurut "Prinsip Korespondensi" (*The Correspondence Principle*) dalam CxG [@goldberg_1995, hlm. 50-51; @goldberg_2002, hlm. 343], peran semantis verba yang menonjol ("*semantically salient profiled participant roles*" [@goldberg_fitting_2014, hlm. 125, catatan kaki no. 6]) dan yang diungkapkan secara eksplisit dalam klausa (aktif) semestinya mengisi peran argumen konstruksi yang juga menonjol ("*profiled argument roles of the construction*") [@goldberg_2002, hlm. 343]. Secara gramatikal, peran argumen konstruksi menonjol dalam klausa aktif merupakan subjek, objek primer (*primary object*), ataupun objek sekunder (*secondary object*)^[Istilah objek primer dan sekunder diadaptasi dari Haspelmath [-@haspelmath_ditransitive_2013].] dalam Konstruksi Objek Ganda [@goldberg_2002, hlm. 343; bdk. @langacker_1991, hlm. 326]. Jika secara semantik-leksikal suatu verba memiliki tiga peran semantis, maka salah satu peran tersebut dapat mengisi peran argumen konstruksi yang tidak ditonjolkan ("*unprofiled argument role*"), yaitu argumen oblik [@goldberg_2002, hlm. 343]^[Yang menjadi pengecualian dari Prinsip Korespondensi adalah ketika verba digunakan dalam konstruksi yang memiliki fungsi untuk "menyembunyikan" peran. Salah satu contohnya adalah konstruksi pasif yang menyebabkan peran menonjol seperti Agen/Aktor dapat ditinggalkan/tidak dimunculkan secara eksplisit [@goldberg_1995, hlm. 45, 56]. Penelitian kali hanya membahas konstruksi aktif untuk *menawari* dan *menawarkan*.]. Jika Prinsip Korespondensi dikaitkan dengan contoh (@rob) dan (@steal), *rob* menonjolkan peran `r ftext("Pencuri/Perampok", ft_frame_element)` dan `r ftext("Target_korban", ft_frame_element)` karena keduanya mengisi slot argumen subjek dan objek primer. Di sisi lain, peran `r ftext("Barang", ft_frame_element)` dari *rob*, jika muncul secara eksplisit, berperan sebagai argumen oblik (dimarkahi oleh preposisi *of* pada contoh (@rob)). Sebaliknya, *steal* secara semantis mengaburkan (*defocus*) peran `r ftext("Target_korban", ft_frame_element)`/`r ftext("Target_lokasi/sumber", ft_frame_element)`, namun menonjolkan peran `r ftext("Pencuri/Perampok", ft_frame_element)` dan `r ftext("Barang", ft_frame_element)`.
+
+:::
+
+Goldberg [-@goldberg_1995, hlm. 45] menyatakan bahwa perbedaan realisasi sintaksis peran semantis *rob* dan *steal* pada contoh (@rob) dan (@steal) dilandasi atas perbedaan semantis kedua verba dalam hal peran menonjolnya. Dengan kata lain, batasan (*constraints*) realisasi sintaksis peran semantis kedua verba tersebut dipicu oleh perbedaan penonjolan semantis, bukan sebaliknya, yaitu, pemakaian *rob* dan *steal* (serta realisasi peran semantisnya) dalam kalimat konkritlah yang berkontribusi terhadap perbedaan penonjolan peran semantisnya [lihat @stefanowitsch_2011, hlm. 261]. Argumentasi Goldberg [-@goldberg_1995, hlm. 45] terkait perbedaan penonjolan tersebut didasari atas data introspektif. Stefanowitsch [-@stefanowitsch_2011] menganggap pendekatan berdasarkan data pemakaian bahasa alamiah mesti digunakan. Makalah ini mengadopsi pendekatan korpus berdasarkan data frekuensi yang diajukan oleh Stefanowitsch [-@stefanowitsch_2011].
+
+## Hipotesis {#hipotesis}
+
+Sneddon [-@sneddon_1996, hlm. 96; juga @kaswanti_1997, hlm. 235] menyatakan bahwa perbedaan antara *menawar-i* dan *menawar-kan* adalah bentuk dengan akhiran -*i* muncul pada Konstruksi Objek Ganda dengan peran `r ftext("Calon_penerima", ft_frame_element)` dipetakan pada slot objek primer dan peran `r ftext("Tema", ft_frame_element)` pada slot objek sekunder (contoh (@dobj-cxn-menawari)). Sebaliknya, bentuk -*kan* muncul pada Konstruksi Monotranstif Oblik dengan `r ftext("Tema", ft_frame_element)` mengisi slot argumen objek langsung dan `r ftext("Calon_penerima", ft_frame_element)` mengisi slot argumen oblik yang dimarkahi preposisi (contoh (@dative-cxn-menawarkan)).
+
+Terkait Prinsip Korespondensi [@goldberg_1995, hlm. 50-51; @goldberg_2002, hlm. 343] (§[\@ref(ProfiledParticipantRoles)](#ProfiledParticipantRoles)), dapat diasumsikan bahwa bentuk -*kan* (*menawar-kan*) secara sintaksis tidak menonjolkan peran `r ftext("Calon_penerima", ft_frame_element)` (karena dipetakan pada argumen oblik), namun hanya peran `r ftext("Agen_penawaran", ft_frame_element)` dan `r ftext("Tema", ft_frame_element)`. Sebaliknya, bentuk -*i* (*menawar-i*) menonjolkan peran `r ftext("Calon_penerima", ft_frame_element)` dan `r ftext("Tema", ft_frame_element)` karena keduanya mengisi peran argumen inti objek primer dan sekunder pada Konstruksi Objek Ganda. Berdasarkan Prinsip Korespondensi dan sudut pandang LKorp, bangun hipotesis terkait hubungan antara (i) menonjolnya suatu peran secara semantis dan (ii) frekuensi kemunculan eksplisit peran tersebut pada slot argumen inti konstruksi adalah sebagai berikut [bdk. @stefanowitsch_2011, hlm. 262]:
+
+> **HIPOTESIS 1**: Jika terdapat perbedaan dalam penonjolan peran semantis suatu verba, maka peran yang lebih sering dinyatakan (*encoded*) secara eksplisit *dan* diasosiasikan dengan peran argumen inti adalah peran yang lebih kuat ditonjolkan oleh verba tersebut.
+
+Terkait dengan *menawari*/*menawarkan*, dua hipotesis dapat dirumuskan berdasarkan pemaparan Sneddon [-@sneddon_1996, hlm. 96; bdk. @kaswanti_1997, hlm. 236], utamanya terkait peran `r ftext("Tema", ft_frame_element)` dan `r ftext("Calon_penerima", ft_frame_element)`:
+
+> **HIPOTESIS 2**: *menawari* dalam klausa aktif, selain menonjolkan peran `r ftext("Agen_penawaran", ft_frame_element)` pada slot subjek, juga seharusnya menonjolkan peran `r ftext("Calon_penerima", ft_frame_element)` dan peran `r ftext("Tema", ft_frame_element)` karena keduanya wajib mengisi slot argumen inti (objek primer dan sekunder) dalam Konstruksi Objek Ganda (contoh (@dobj-cxn-menawari)). Prediksi kuantitatifnya adalah bahwa tidak terdapat perbedaan yang signifikan terkait frekuensi dinyatakannya ketiga peran semantis tersebut karena secara semantis wajib muncul bersama secara eksplisit ketika *menawari* digunakan dalam kalimat.
+
+> **HIPOTESIS 3**: *menawarkan* dalam klausa aktif, selain menonjolkan peran `r ftext("Agen_penawaran", ft_frame_element)` pada slot subjek, juga seharusnya menonjolkan peran `r ftext("Tema", ft_frame_element)` karena peran ini mengisi slot argumen inti objek langsung dalam Konstruksi Monotransitif Oblik; sebaliknya, peran `r ftext("Calon_penerima", ft_frame_element)` tidak begitu menonjol karena mengisi slot argumen oblik dari *menawarkan* sehingga tidak selalu wajib dinyatakan (contoh (@dative-cxn-menawarkan)). Prediksi kuantitatifnya adalah bahwa frekuensi dinyatakannya peran `r ftext("Calon_penerima", ft_frame_element)` paling rendah dibandingkan dua peran lainnya (karena tidak selalu wajib dinyatakan), dan jika dinyatakan eksplisit seharusnya muncul dalam argumen oblik lebih sering dibandingkan slot argumen inti lainnya.
+
+Lebih lanjut, kita juga bisa menguji klaim berdasarkan contoh (@dobj-cxn-menawari) dan (@dative-cxn-menawarkan) yang diberikan oleh Sneddon [-@sneddon_1996, hlm. 96] terkait tipe konstruksi gramatikal *menawari*/*menawarkan*:
+
+> **HIPOTESIS 4**: Konstruksi Objek Ganda secara proporsional seharusnya paling dominan untuk *menawari*. Sebaliknya, Konstruksi Monotransitif Oblik secara proporsional seharusnya paling dominan untuk *menawarkan*.
+
+Kajian penonjolan peran semantis secara konstruksional untuk pasangan verba -*i* dan -*kan* seperti *menawari*/*menawarkan* akan dapat menunjukkan (i) partisipan mana yang dominan ditonjolkan oleh kedua verba tersebut, dan (ii) implikasi konstruksional (yaitu, tipe konstruksi gramatikal) bagaimana kedua verba tersebut digunakan. Dengan menerapkan pendekatan korpus yang diadaptasi dari Stefanowitsch [-@stefanowitsch_2011] dan yang secara luas dilandasi atas model bahasa berbasis pemakaian (*usage-based model of language*), makalah ini menawarkan metode dan perspektif berbeda dalam menentukan penonjolan peran semantis verba, selain penerapan metode penilaian gramatikal introspektif (*grammaticality judgement*). Dari perspektif yang lebih luas, dengan menerapkan pendekatan kuantitatif, konsep peran menonjol dapat dimodelkan secara gradasi/relatif. Model teoretis fungsional/*usage-based* seperti CxG pada hakikatnya dapat mengakomodir temuan kuantitatif dari korpus yang dilandasi atas data pemakaian bahasa alamiah [lihat @rajeg_meninjau_2023 untuk contoh analisis serupa atas *memberi* vs. *memberikan*].
+
+# Metode Penelitian {#metode}
+
+```{r leipzig-size, message = FALSE, include = FALSE}
+leipzig_corpus_used <- readr::read_tsv("leipzig_size.txt")
+```
+
+```{r node-verb-size, message = FALSE, include = FALSE}
+verb_freq <- readr::read_tsv("TAWAR_freqlist.tsv")
+menawari_freq <- pull(filter(verb_freq, match == "menawari"), n)
+menawarkan_freq <- pull(filter(verb_freq, match == "menawarkan"), n)
+verb_freq_input <- c(menawarkan_freq, menawari_freq)
+menawarkan_menawari_chisq <- chisq.test(verb_freq_input)
+menawarkan_menawari_binom <- binom.test(verb_freq_input)
+```
+
+
+Sumber data makalah ini berasal dari lima berkas sub-korpus BInd dalam *Leipzig Corpora Collection* [@biemann_leipzig_2007; @quasthoff_indonesian_2013]. Kelima sub-korpus tersebut berasal dari teks berita daring^[Berkas sub-korpus yang digunakan adalah `r ftext("ind_news_(2008/2009/2010/2011/2012)_300K-sentences.txt", ft_frame_element)`. Rerata ukuran tiap-tiap berkas tersebut adalah `r prettyNum(sum(leipzig_corpus_used$Size_print)/nrow(leipzig_corpus_used), big.mark = ".", decimal.mark = ",")` kemunculan kata.] berukuran total `r prettyNum(sum(leipzig_corpus_used$Size_print), big.mark = ".", decimal.mark = ",")` kemunculan kata. Yang menarik adalah bahwa frekuensi kemunculan total *menawarkan* (n=`r prettyNum(pull(filter(verb_freq, match == "menawarkan"), n), big.mark = ".", decimal.mark = ",")`) di kelima korpus secara sangat signifikan jauh lebih tinggi dibandingkan *menawari* (n=`r prettyNum(pull(filter(verb_freq, match == "menawari"), n), big.mark = ".", decimal.mark = ",")`) (*p*~Binomial~ ~two~~-~~tailed~`r if (any(menawarkan_menawari_binom$p.value < 0.0001)) " < 0.0001"`). Potensi implikasi ketimpangan frekuensi ini akan coba diulas pada §[\@ref(kontaminasi)](#kontaminasi) terkait perilaku konstruksional *menawari* (sehubungan dengan perilaku konstruksional *menawarkan*) berdasarkan prinsip *usage-based model* dalam CxG.
+
+Sampel data yang dianalisis adalah 100 sitiran kalimat aktif acak untuk *menawarkan* dan semua kemunculan *menawari* (yang total kemunculannya kurang dari 100 sitiran di kelima korpus, yaitu `r pull(filter(verb_freq, match == "menawari"), n)` kali). Kalimat ini ditampilkan dalam format konkordansi atau *key word in context* (KWIC) yang dihasilkan menggunakan modul R `r ftext("corplingr", ft_frame_element)` [@rajeg_corplingr_2021], lalu diekspor dan dianalisis/anotasi secara kualitatif dalam MS Excel. Anotasi kualitatif terkait peran menonjol meliputi dua hal: (i) apakah ketiga peran semantis kedua verba tersebut direalisasikan secara eksplisit (lihat [Gambar \@ref(fig:fig-1-overall-encoding)](#fig-1-overall-encoding) pada §[\@ref(profiling)](#profiling)), dan (ii) apakah realisasi eksplisit peran tersebut juga dipetakan pada peran argumen inti dari konstruksi gramatikalnya ([Gambar \@ref(fig:fig-2-core-encoding)](#fig-2-core-encoding), §[\@ref(profiling)](#profiling)), sejalan dengan Prinsip Korespondensi (§[\@ref(ProfiledParticipantRoles)](#ProfiledParticipantRoles)) dalam CxG [@goldberg_1995, hlm. 50-51; @goldberg_2002, hlm. 343]. 
+
+Anotasi kualitatif selanjutnya adalah tipe konstruksi gramatikal kedua verba, yang meliputi Konstruksi Objek Ganda dan Konstruksi Monotransitif(-Oblik); konstruksi lain yang ditemukan (mis. Konstruksi Intransitif) juga ditandai dalam analisis. Mengikuti temuan kajian tipologi bahasa [@dixon_complement_2006, hlm. 8], Konstruksi Objek Ganda yang dianotasi meliputi realisasi peran `r ftext("Tema", ft_frame_element)` sebagai nomina (contoh (@dobj-cxn-menawari) dan (@dobj-noun-theme)) maupun klausa (@dobj-clause-theme) [untuk praktik anotasi serupa, lihat juga @stefanowitsch_negative_2006, hlm. 75, catatan akhir no. 4]. Pada contoh (@dobj-clause-theme), peran `r ftext("Tema", ft_frame_element)` klausal *menjadi caleg dari partai itu* secara semantis berkaitan dengan peran `r ftext("Tema", ft_frame_element)` nominal *lowongan pekerjaan* pada contoh (@dobj-noun-theme) karena lowongan pekerjaan bisa berupa, salah satunya, menjadi caleg.
+
+(@dobj-noun-theme) Nenden *menawari* [korban]~Calon_penerima~ [lowongan pekerjaan di Tarakan]~Tema~ (ind_news_2011_300K:313)
+(@dobj-clause-theme) PDIP *menawari* [Jafar]~Calon_penerima~ [menjadi caleg dari partai itu]~Tema~ (ind_news_2008_300K:227070)
+
+::: {custom-style="First Paragraph"}
+
+Bentuk pasif *ditawari* dan *ditawarkan* tidak dibahas kali ini karena konstruksi pasif memiliki fungsi untuk meniadakan (*backgrounding*) salah satu peran semantis, utamanya `r ftext("Agen", ft_frame_element)` sehingga akan sulit untuk melihat penonjolan ketiga peran semantis kunci *menawari* dan *menawarkan*. Jadi, makalah ini mengikuti Stefanowitsch [-@stefanowitsch_2011] yang mengkaji verba dalam kalimat aktif.
+
+Analisis kuantitatif meliputi dua hal. Pertama, statistik deskriptif (frekuensi dan persentase) [@gries_statistics_2009, Bab 3] untuk menyarikan distribusi penonjolan peran semantis dan (sub-)tipe konstruksi gramatikal tiap-tiap verba. Kedua, statistik analitis (uji signifikansi) [@gries_statistics_2009, Bab 4] untuk menguji signifikansi ke(tidak)timpangan distribusi peran semantis masing-masing verba, dan (sub-)tipe konstruksi gramatikalnya. Makalah ini ditulis langsung menggunakan [R Markdown](https://rmarkdown.rstudio.com/index.html) melalui [RStudio](https://www.rstudio.com) yang memberikan satu wadah untuk teks naratif, pengelolaan referensi, dan kode pemrograman R [@rcoreteam_2020] dalam analisis statistik dan visualisasi. Berkas R Markdown beserta data konkordansi yang mengandung analisis kualitatif untuk makalah ini diterbitkan terbuka [CITATION TO THE SUPPLEMENTARY MATERIALS IF ACCEPTED].
+
+:::
+
+# Pembahasan {#results}
+
+## Derajat penonjolan peran semantis untuk *menawari* dan *menawarkan* {#profiling}
+
+```{r load-data, include = FALSE, echo = FALSE}
+menawari <- read_tsv("menawari.txt") %>% 
+  filter(syntactic_transitivity != "replicate") %>%
+  mutate(theme_core = TRUE,
+         theme_core = replace(theme_core, theme_gf == "obl", FALSE),
+         theme_gf = replace(theme_gf, is.na(theme_gf), "NA"),
+         recipient_gf = replace(recipient_gf, is.na(recipient_gf), "NA"),
+         recipient_core = TRUE,
+         recipient_core = replace(recipient_core, recipient_gf %in% c("obl") | is.na(recipient_gf), FALSE),
+         agent_core = NA, 
+         agent_core = replace(agent_core, agent_encoded == "yes" & agent_gf == "subj", TRUE),
+         agent_core = replace(agent_core, agent_encoded == "yes" & agent_gf != "subj", FALSE)) %>% 
+  # the following codes is for capturing the ditransitive pattern with clausal theme
+  mutate(syntactic_transitivity2 = syntactic_transitivity,
+         syntactic_transitivity2 = replace(syntactic_transitivity2,
+                                          syntactic_transitivity2 == "monotransitive" &
+                                            dobj_role == "recepient" &
+                                            theme_encoded == "yes" &
+                                            notes == "clausal_theme",
+                                          "ditransitive"))
+menawarkan <- read_tsv("menawarkan.txt") %>% 
+  filter(syntactic_transitivity != "nominal") %>%
+  mutate(schema = replace(schema, is.na(schema), "intransitive"),
+         schema = replace(schema, 
+                          syntactic_transitivity == "monotransitive", 
+                          "theme-obj"),
+         schema = replace(schema, 
+                          syntactic_transitivity == "monotransitive" & recipient_syntax == "pp_dative", 
+                          "theme-obj_recipient-oblique"))
+```
+
+```{r explicit-encoding-overall, include = FALSE, echo = TRUE}
+# menawari roles encoding-------
+agent_encoding <- menawari %>% 
+  filter(theme_gf != "clause") %>% 
+  count(agent_encoded) %>% 
+  mutate(role = "offerer", perc = n/sum(n) * 100, perc = round(perc)) %>% 
+  rename(role_encoding = agent_encoded)
+theme_encoding <- menawari %>%
+  filter(theme_gf != "clause") %>% 
+  count(theme_encoded) %>% 
+  mutate(role = "theme", perc = n/sum(n) * 100, perc = round(perc)) %>% 
+  rename(role_encoding = theme_encoded)
+theme_encoding_coreness <- menawari %>%
+  filter(theme_gf != "clause", theme_encoded == "yes") %>% 
+  count(theme_core)
+recipient_encoding <- menawari %>% 
+  filter(theme_gf != "clause") %>%
+  count(recipient_encoded) %>% 
+  mutate(role = "potential recipient", perc = n/sum(n) * 100, perc = round(perc)) %>% 
+  rename(role_encoding = recipient_encoded)
+recipient_encoding_coreness <- menawari %>%
+  filter(theme_gf != "clause", recipient_encoded == "yes") %>% 
+  count(recipient_core)
+menawari_arg_profiling <- bind_rows(agent_encoding, theme_encoding, recipient_encoding) %>% 
+    mutate(verb = "menawari", encoding_type = "explicitness")
+menawari_arg_profiling_binom <- menawari_arg_profiling %>% 
+  select(role_encoding, n, role) %>% 
+  pivot_wider(names_from = "role_encoding", values_from = "n") %>% 
+  mutate(total = no + yes, 
+         binom_res = pmap(list(x = yes, n = total), binom.test), 
+         pbin = map_dbl(binom_res, "p.value"), 
+         conf_int = map(binom_res, "conf.int"), 
+         conf_int_lower = map_dbl(conf_int, function(x) x[1]), 
+         conf_int_upper = map_dbl(conf_int, function(x) x[2]))
+menawari_roles_encoded <- menawari_arg_profiling %>% filter(role_encoding == "yes") %>% pull(n)
+names(menawari_roles_encoded) <- menawari_arg_profiling %>% filter(role_encoding == "yes") %>% pull(role)
+menawari_arg_profiling_chisq <- chisq.test(menawari_roles_encoded)
+
+
+# menawari roles encoding INCLUDING CLAUSAL THEME-------
+agent_encoding <- menawari %>% 
+  # filter(theme_gf != "clause") %>% 
+  count(agent_encoded) %>% 
+  mutate(role = "offerer", perc = n/sum(n) * 100, perc = round(perc)) %>% 
+  rename(role_encoding = agent_encoded)
+theme_encoding <- menawari %>%
+  # filter(theme_gf != "clause") %>% 
+  count(theme_encoded) %>% 
+  mutate(role = "theme", perc = n/sum(n) * 100, perc = round(perc)) %>% 
+  rename(role_encoding = theme_encoded)
+recipient_encoding <- menawari %>% 
+  # filter(theme_gf != "clause") %>%
+  count(recipient_encoded) %>% 
+  mutate(role = "potential recipient", perc = n/sum(n) * 100, perc = round(perc)) %>% 
+  rename(role_encoding = recipient_encoded)
+menawari_arg_profiling_clause <- bind_rows(agent_encoding, theme_encoding, recipient_encoding) %>% 
+    mutate(verb = "menawari", encoding_type = "explicitness")
+menawari_arg_profiling_binom_clause <- menawari_arg_profiling_clause %>% 
+  select(role_encoding, n, role) %>% 
+  pivot_wider(names_from = "role_encoding", values_from = "n") %>% 
+  mutate(total = no + yes,
+         binom_res = pmap(list(x = yes, n = total), binom.test), 
+         pbin = map_dbl(binom_res, "p.value"), 
+         conf_int = map(binom_res, "conf.int"), 
+         conf_int_lower = map_dbl(conf_int, function(x) x[1]), 
+         conf_int_upper = map_dbl(conf_int, function(x) x[2]))
+menawari_roles_encoded_clause <- menawari_arg_profiling_clause %>% filter(role_encoding == "yes") %>% pull(n)
+names(menawari_roles_encoded_clause) <- menawari_arg_profiling_clause %>% filter(role_encoding == "yes") %>% pull(role)
+menawari_arg_profiling_chisq_clause <- chisq.test(menawari_roles_encoded_clause)
+
+
+# menawarkan roles encoding-------
+agent_encoding <- menawarkan %>% 
+  count(agent_encoded) %>% 
+  mutate(role = "offerer", perc = n/sum(n) * 100, perc = round(perc)) %>% 
+  rename(role_encoding = agent_encoded)
+theme_encoding <- menawarkan %>% 
+  count(theme_encoded) %>% 
+  mutate(role = "theme", perc = n/sum(n) * 100, perc = round(perc)) %>% 
+  rename(role_encoding = theme_encoded)
+recipient_encoding <- menawarkan %>% 
+  count(recipient_encoded) %>% 
+  mutate(role = "potential recipient", perc = n/sum(n) * 100, perc = round(perc)) %>% 
+  rename(role_encoding = recipient_encoded)
+menawarkan_arg_profiling <- bind_rows(agent_encoding, theme_encoding, recipient_encoding) %>% 
+    mutate(verb = "menawarkan", encoding_type = "explicitness")
+menawarkan_arg_profiling_binom <- menawarkan_arg_profiling %>% 
+  select(role_encoding, n, role) %>% 
+  pivot_wider(names_from = "role_encoding", values_from = "n") %>% 
+  mutate(total = no + yes,
+         binom_res = pmap(list(x = yes, n = total), binom.test), 
+         pbin = map_dbl(binom_res, "p.value"), 
+         conf_int = map(binom_res, "conf.int"), 
+         conf_int_lower = map_dbl(conf_int, function(x) x[1]), 
+         conf_int_upper = map_dbl(conf_int, function(x) x[2]))
+menawarkan_roles_encoded <- menawarkan_arg_profiling %>% filter(role_encoding == "yes") %>% pull(n)
+names(menawarkan_roles_encoded) <- menawarkan_arg_profiling %>% filter(role_encoding == "yes") %>% pull(role)
+menawarkan_arg_profiling_chisq <- chisq.test(menawarkan_roles_encoded)
+```
+
+```{r explicit-encoding-core, include = FALSE, echo = FALSE}
+# menawari coreness --------
+theme_encoding_coreness_clause <- menawari %>%
+  filter(theme_encoded == "yes") %>% 
+  count(theme_core) %>% 
+  mutate(perc = round(n/sum(n) * 100)) %>% 
+  mutate(role = "theme", verb = "menawari", encoding_type = "coreness") %>% 
+  rename(role_encoding = theme_core) %>% 
+  mutate(role_encoding = if_else(role_encoding, "yes", "no"))
+recipient_encoding_coreness_clause <- menawari %>%
+  filter(recipient_encoded == "yes") %>% 
+  count(recipient_core) %>% 
+  mutate(perc = round(n/sum(n) * 100)) %>% 
+  mutate(role = "potential recipient", verb = "menawari", encoding_type = "coreness") %>% 
+  rename(role_encoding = recipient_core) %>% 
+  mutate(role_encoding = if_else(role_encoding, "yes", "no"))
+agent_encoding_coreness_clause <- menawari %>% 
+  filter(agent_encoded == "yes", !is.na(agent_core)) %>% 
+  count(agent_core) %>% 
+  mutate(perc = round(n/sum(n) * 100)) %>% 
+  mutate(role = "offerer", verb = "menawari", encoding_type = "coreness") %>% 
+  rename(role_encoding = agent_core) %>% 
+  mutate(role_encoding = if_else(role_encoding, "yes", "no"))
+
+menawari_arg_profiling_coreness <- bind_rows(agent_encoding_coreness_clause, theme_encoding_coreness_clause, recipient_encoding_coreness_clause)
+menawari_arg_profiling_coreness_binom <- menawari_arg_profiling_coreness %>% 
+  select(role_encoding, n, role) %>% 
+  pivot_wider(names_from = "role_encoding", values_from = "n") %>% 
+  mutate(total = no + yes,
+         binom_res = pmap(list(x = yes, n = total), binom.test), 
+         pbin = map_dbl(binom_res, "p.value"), 
+         conf_int = map(binom_res, "conf.int"), 
+         conf_int_lower = map_dbl(conf_int, function(x) x[1]), 
+         conf_int_upper = map_dbl(conf_int, function(x) x[2]))
+menawari_roles_encoded_coreness <- menawari_arg_profiling_coreness %>% filter(role_encoding == "yes") %>% pull(n)
+names(menawari_roles_encoded_coreness) <- menawari_arg_profiling_coreness %>% filter(role_encoding == "yes") %>% pull(role)
+menawari_arg_profiling_chisq_coreness <- chisq.test(menawari_roles_encoded_coreness)
+
+# menawarkan coreness-----
+agent_encoding_coreness_menawarkan <- menawarkan %>% 
+  filter(agent_encoded=='yes') %>% 
+  count(agent_core) %>% 
+  mutate(perc = round(n/sum(n) * 100)) %>% 
+  mutate(role = "offerer", verb = "menawarkan", encoding_type = "coreness") %>% 
+  rename(role_encoding = agent_core) %>% 
+  mutate(role_encoding = if_else(role_encoding, "yes", "no"))
+## THEME for menawarkan is always (100%) core (as primary object)
+# menawarkan %>% count(theme_core)
+theme_encoding_coreness_menawarkan <- tibble(role_encoding = c("no", "yes"),
+                                             n = c(0, pull(filter(count(menawarkan, theme_core), theme_core), n)),
+                                             role = "theme", verb = "menawarkan", encoding_type = "coreness") %>% 
+  mutate(perc = round(n/sum(n) * 100))
+## RECIPIENT for menawarkan is always (100%) oblique (hence, NOT core)
+# menawarkan %>% count(recipient_core)
+recipient_encoding_coreness_menawarkan <- tibble(role_encoding = c("no", "yes"),
+                                             n = c(pull(filter(count(menawarkan, recipient_core), 
+                                                               recipient_core == FALSE), n), 0),
+                                             role = "potential recipient", 
+                                             verb = "menawarkan", 
+                                             encoding_type = "coreness") %>% 
+  mutate(perc = round(n/sum(n) * 100))
+
+menawarkan_arg_profiling_coreness <- bind_rows(agent_encoding_coreness_menawarkan, theme_encoding_coreness_menawarkan, recipient_encoding_coreness_menawarkan)
+menawarkan_arg_profiling_coreness_binom <- menawarkan_arg_profiling_coreness %>% 
+  select(role_encoding, n, role) %>% 
+  pivot_wider(names_from = "role_encoding", values_from = "n") %>% 
+  mutate(total = no + yes,
+         binom_res = pmap(list(x = yes, n = total), binom.test), 
+         pbin = map_dbl(binom_res, "p.value"), 
+         conf_int = map(binom_res, "conf.int"), 
+         conf_int_lower = map_dbl(conf_int, function(x) x[1]), 
+         conf_int_upper = map_dbl(conf_int, function(x) x[2]))
+menawarkan_roles_encoded_coreness <- menawarkan_arg_profiling_coreness %>% filter(role_encoding == "yes") %>% pull(n)
+names(menawarkan_roles_encoded_coreness) <- menawarkan_arg_profiling_coreness %>% filter(role_encoding == "yes") %>% pull(role)
+menawarkan_arg_profiling_chisq_coreness <- chisq.test(menawarkan_roles_encoded_coreness)
+
+```
+
+
+```{r explicit-encoding-combined-overall-and-core}
+arg_profiling_all_verbs <- bind_rows(menawari_arg_profiling_clause, menawari_arg_profiling_coreness, menawarkan_arg_profiling, menawarkan_arg_profiling_coreness) %>% 
+  mutate(role_encoding = factor(role_encoding, levels = c("yes", "no")),
+         role = factor(role, levels = c("offerer", "theme", "potential recipient")),
+         role_idn = "Agen_penawaran", role_idn = replace(role_idn, role == "theme", "Tema"),
+         role_idn = replace(role_idn, role == "potential recipient", "Calon_penerima"),
+         role_idn = factor(role_idn, levels = c("Agen_penawaran", "Tema", "Calon_penerima")))
+```
+
+[Gambar \@ref(fig:fig-1-overall-encoding)](#fig-1-overall-encoding) menampilkan persentase (dan frekuensi riil) realisasi eksplisit peran semantis dari *menawari* (panel kiri) dan *menawarkan* (panel kanan) dalam sampel (distribusi ini belum memisahkan realisasi eksplisit yang juga dipetakan pada slot argumen inti konstruksi gramatikal; lihat [Gambar \@ref(fig:fig-2-core-encoding)](#fig-2-core-encoding)).
+
+```{r fig-1-overall-encoding, fig.cap = "Realisasi eksplisit peran semantis dari *menawari* dan *menawarkan*", fig.asp = 0.45}
+arg_profiling_all_verbs %>% 
+  filter(encoding_type=='explicitness') %>% 
+  ggplot(aes(x = role_idn, y = perc, fill = role_encoding)) + 
+  geom_col(position = "dodge") + 
+  theme_bw() +
+  geom_text(aes(label = paste(perc, "%", "\n(n=", n, ")", sep = "")),
+            position = position_dodge(.9), vjust = ifelse(pull(filter(arg_profiling_all_verbs, encoding_type == "explicitness"), perc) < 20, -0.5, 1.1), size = 2, colour = ifelse(pull(filter(arg_profiling_all_verbs, encoding_type == "explicitness"), role_encoding) == "no", "black", "white")) +
+  facet_wrap(~verb) +
+  scale_fill_grey(labels = c("ya", "tidak")) +
+  theme(axis.text.x = element_text(size = 6.5),
+        legend.title = element_text(size = 8.25, family = "serif"),
+        legend.text = element_text(size = 7),
+        axis.title.y = element_text(size = 8.25, family = "serif"),
+        axis.title.x = element_text(size = 8.25, family = "serif"),
+        plot.caption = element_text(size = 7, family = "serif")) +
+  labs(fill = "Realisasi eksplisit",
+       x = "Peran semantis",
+       y = "Persentase",
+       caption = "Nilai dalam kurung adalah frekuensi riil.")
+```
+
+
+```{r pbinom-menawari-for-each-role, include = FALSE}
+## uncomment the following line of code
+  # menawari_arg_profiling_binom_clause$pbin < 0.0001
+## from the code above, all p-binomial values for each role are p < 0.0001
+```
+
+::: {custom-style="First Paragraph"}
+
+Dari total `r nrow(menawari)` sampel^[Jumlah `r nrow(menawari)` kalimat ini diperoleh setelah mengesampingkan dua sitiran duplikasi untuk *menawari*.] kalimat acak yang dianalisis untuk *menawari*, masing-masing peran semantisnya secara signifikan lebih sering dinyatakan eksplisit (*p*~Binomial~ ~two~~-~~tailed~`r if (all(menawari_arg_profiling_binom_clause$pbin < 0.0001)) " < 0.0001"` untuk `r ftext("Agen_penawaran", ft_frame_element)`, `r ftext("Tema", ft_frame_element)`, dan `r ftext("Calon_penerima", ft_frame_element)`). Meskipun peran `r ftext("Calon_penerima", ft_frame_element)` (`r pull(filter(arg_profiling_all_verbs, verb == "menawari", encoding_type == "explicitness", role_encoding == "yes", role == "potential recipient"), perc)`%) paling jarang dinyatakan dibandingkan `r ftext("Tema", ft_frame_element)` (`r pull(filter(arg_profiling_all_verbs, verb == "menawari", encoding_type == "explicitness", role_encoding == "yes", role == "theme"), perc)`%) dan `r ftext("Agen_penawaran", ft_frame_element)` (`r pull(filter(arg_profiling_all_verbs, verb == "menawari", encoding_type == "explicitness", role_encoding == "yes", role == "offerer"), perc)`%), secara statistik, perbedaan distribusi tersebut tidak signifikan (*X*^2^~Goodness~ ~of~ ~fit~=`r round(menawari_arg_profiling_chisq_clause$statistic, 2)`, *df*=`r menawari_arg_profiling_chisq_clause$parameter`, *p*=`r round(menawari_arg_profiling_chisq_clause$p.value, 2)`). Kedua analisis kuantitatif sebelumnya mengindikasikan bahwa ketiga peran semantis dari *menawari* dapat dikatakan sama-sama menonjol jika dilihat dari realisasi eksplisitnya (perhatikan kembali **HIPOTESIS 2** pada [§\@ref(hipotesis)](#hipotesis)). 
+
+:::
+
+Distribusi berbeda ditunjukkan oleh *menawarkan* (panel kanan pada [Gambar \@ref(fig:fig-1-overall-encoding)](#fig-1-overall-encoding)) terkait realisasi eksplisit peran semantisnya. Utamanya, peran `r ftext("Calon_penerima", ft_frame_element)` secara sangat signifikan lebih sering **tidak** dinyatakan eksplisit (`r pull(filter(arg_profiling_all_verbs, verb == "menawarkan", encoding_type == "explicitness", role_encoding == "no", role == "potential recipient"), perc)`%) (*p*~Binomial~ ~two~~-~~tailed~`r if (pull(filter(menawarkan_arg_profiling_binom, role=="potential recipient"), pbin) < 0.0001) " < 0.0001"`). Secara keseluruhan, terdapat ketimpangan yang sangat signifikan di antara frekuensi realisasi eksplisit peran `r ftext("Calon_penerima", ft_frame_element)` (`r pull(filter(arg_profiling_all_verbs, verb == "menawarkan", encoding_type == "explicitness", role_encoding == "yes", role == "potential recipient"), perc)`%) dan dua peran lainnya untuk *menawarkan*, yang lebih condong menyatakan peran `r ftext("Agen_penawaran", ft_frame_element)` (`r pull(filter(arg_profiling_all_verbs, verb == "menawarkan", encoding_type == "explicitness", role_encoding == "yes", role == "offerer"), perc)`%) dan `r ftext("Tema", ft_frame_element)` (`r pull(filter(arg_profiling_all_verbs, verb == "menawarkan", encoding_type == "explicitness", role_encoding == "yes", role == "theme"), perc)`%) (*X*^2^~Goodness~ ~of~ ~fit~=`r round(menawarkan_arg_profiling_chisq$statistic, 2)`, *df*=`r menawarkan_arg_profiling_chisq$parameter`, *p*`r if (menawarkan_arg_profiling_chisq$p.value < 0.0001) " < 0.0001"`) (**HIPOTESIS 3**). [Gambar \@ref(fig:fig-2-core-encoding)](#fig-2-core-encoding) berikut mempertegas perbedaan penonjolan peran semantis untuk *menawari* dan *menawarkan* terkait pemetaan peran semantisnya pada slot argumen inti konstruksi.
+
+```{r fig-2-core-encoding, fig.cap = "Realisasi eksplisit sebagai argumen inti untuk peran semantis dari *menawari* dan *menawarkan*", fig.asp = 0.45}
+arg_profiling_all_verbs %>% 
+  filter(encoding_type=='coreness') %>% 
+  ggplot(aes(x = role_idn, y = perc, fill = role_encoding)) + 
+  geom_col(position = "dodge") + 
+  theme_bw() +
+  geom_text(aes(label = paste(perc, "%", "\n(n=", n, ")", sep = "")),
+            position = position_dodge(.9), vjust = ifelse(pull(filter(arg_profiling_all_verbs, encoding_type == "coreness"), perc) < 20, -0.5, 1.1), size = 2, colour = ifelse(pull(filter(arg_profiling_all_verbs, encoding_type == "coreness"), role_encoding) == "no", "black", "white")) +
+  facet_wrap(~verb) +
+  scale_fill_grey(labels = c("ya", "tidak")) +
+  theme(axis.text.x = element_text(size = 6.5),
+        legend.title = element_text(size = 8.25, family = "serif"),
+        legend.text = element_text(size = 7),
+        axis.title.y = element_text(size = 8.25, family = "serif"),
+        axis.title.x = element_text(size = 8.25, family = "serif"),
+        plot.caption = element_text(size = 7, family = "serif")) +
+  labs(fill = "Realisasi eksplisit\n+Argumen inti",
+       x = "Peran semantis",
+       y = "Persentase",
+       caption = "Nilai dalam kurung adalah frekuensi riil.")
+```
+
+::: {custom-style="First Paragraph"}
+
+[Gambar \@ref(fig:fig-2-core-encoding)](#fig-2-core-encoding) menunjukkan bahwa, untuk *menawari*, ketika ketiga peran semantisnya dinyatakan secara eksplisit, ketiganya secara signifikan hampir selalu (di atas 90%) mengisi slot argumen inti konstruksi gramatikal di mana *menawari* digunakan (*p*~Binomial~ ~two~~-~~tailed~`r if (all(menawari_arg_profiling_binom_clause$pbin < 0.0001)) " < 0.0001"` untuk `r ftext("Agen_penawaran", ft_frame_element)`, `r ftext("Tema", ft_frame_element)`, dan `r ftext("Calon_penerima", ft_frame_element)`) (periksa **HIPOTESIS 2**). Frekuensi penonjolan ketiga peran semantis pada argumen inti untuk *menawari* tidak berbeda secara signifikan (*X*^2^~Goodness~ ~of~ ~fit~=`r round(menawari_arg_profiling_chisq_coreness$statistic, 2)`, *df*=`r menawari_arg_profiling_chisq_coreness$parameter`, *p*=`r round(menawari_arg_profiling_chisq_coreness$p.value, 2)`). Secara kategorikal, [Gambar \@ref(fig:fig-2-core-encoding)](#fig-2-core-encoding) juga menunjukkan bahwa, untuk *menawari* khususnya, peran `r ftext("Tema", ft_frame_element)` dan `r ftext("Calon_penerima", ft_frame_element)` dapat juga dinyatakan secara eksplisit namun tidak selalu mengisi slot argumen inti, meskipun proporsinya minor (`r pull(filter(menawari_arg_profiling_coreness, role == "theme", role_encoding == "no"), perc)`% untuk `r ftext("Tema", ft_frame_element)` dan `r pull(filter(menawari_arg_profiling_coreness, role == "potential recipient", role_encoding == "no"), perc)`% untuk `r ftext("Calon_penerima", ft_frame_element)`). Distribusi ini mengindikasikan bahwa *menawari* memiliki variasi konstruksi gramatikal (lihat [Gambar \@ref(fig:fig-3-and-4-combined)](#fig-3-and-4-combined) pada §[\@ref(konstruksi)](#konstruksi)).
+
+:::
+
+
+Untuk *menawarkan* (panel kanan pada [Gambar \@ref(fig:fig-2-core-encoding)](#fig-2-core-encoding)), peran `r ftext("Agen_penawaran", ft_frame_element)` dan `r ftext("Tema", ft_frame_element)` sama-sama ditonjolkan layaknya untuk *menawari* karena kedua peran ini ketika dinyatakan secara eksplisit hampir selalu dipetakan pada slot argumen inti (*p*~Binomial~ ~two~~-~~tailed~`r if (all(pull(filter(menawarkan_arg_profiling_coreness_binom, str_detect(role, "potential", TRUE)), pbin) < 0.0001)) " < 0.0001"` untuk `r ftext("Agen_penawaran", ft_frame_element)` dan `r ftext("Tema", ft_frame_element)`). Sebaliknya, dari `r pull(filter(arg_profiling_all_verbs, verb == "menawarkan", encoding_type == "explicitness", role_encoding == "yes", role == "potential recipient"), n)` kali realisasi eksplisit peran `r ftext("Calon_penerima", ft_frame_element)` untuk *menawarkan*, semuanya tidak mengisi slot argumen inti konstruksi (*p*~Binomial~ ~two~~-~~tailed~`r if (pull(filter(menawarkan_arg_profiling_coreness_binom, str_detect(role, "potential", FALSE)), pbin) < 0.0001) " < 0.0001"`), temuan yang sejalan dengan pemaparan yang diberikan oleh Sneddon [-@sneddon_1996, hlm. 96; juga @kaswanti_1997] (lihat **HIPOTESIS 3**). Singkatnya, terdapat ketimpangan signifikan untuk *menawarkan* dalam penonjolan peran semantisnya pada slot argumen inti konstruksi (*X*^2^~Goodness~ ~of~ ~fit~=`r round(menawarkan_arg_profiling_chisq_coreness$statistic, 2)`, *df*=`r menawarkan_arg_profiling_chisq_coreness$parameter`, *p*`r if (menawarkan_arg_profiling_chisq_coreness$p.value < 0.0001) " < 0.0001"`).
+
+
+Analisis sebelumnya hanya menunjukkan bahwa derajat dinyatakannya suatu peran secara eksplisit pada slot argumen inti konstruksi mengindikasikan seberapa menonjol peran semantis suatu verba (dibandingkan verba yang mirip secara semantis). Analisis terkait data pada [Gambar \@ref(fig:fig-2-core-encoding)](#fig-2-core-encoding) tidak mengungkapkan apakah, misalnya, penonjolan ketiga peran semantis untuk *menawari* karena *menawari* **selalu** muncul dalam Konstruksi Objek Ganda (sehingga ketiga peran tersebut mengisi tiga argumen inti konstruksi tersebut) [@sneddon_1996, hlm. 96; @kaswanti_1997]. Butir ini berkaitan dengan **HIPOTESIS 4** yang, secara teoretis, memprediksi bahwa Konstruksi Objek Ganda mendominasi pemakaian *menawari* sedangkan Konstruksi Monotransitif Oblik mencirikan pemakaian *menawarkan*. Butir tersebut dibahas pada bagian selanjutnya (§[\@ref(konstruksi)](#konstruksi)).
+
+## Tipe konstruksi gramatikal untuk *menawari* dan *menawarkan* {#konstruksi}
+
+```{r cxn-analysis-menawari}
+cxn_transitivity_menawari <- menawari %>% 
+  mutate(cxn_type = replace(cxn_type, schema == "theme_obj_cxn" & dobj_syntax == "clause", "theme-obj.clause"), 
+         cxn_type = replace(cxn_type, schema == "theme_obj_cxn" & dobj_syntax == "np" & is.na(obj2_role), "theme-obj.np"), 
+         cxn_type = replace(cxn_type, schema == "theme_obj_cxn" & dobj_syntax == "np" & obj2_role == "recipient", "theme-obj.np_recipient-oblique")) %>% 
+  count(syntactic_transitivity2, cxn_type) %>%
+  mutate(cxn_type = replace(cxn_type, cxn_type == "recipient-obj_theme-oblique", "recipient-obj_theme.np-oblique")) %>% 
+  rename(trv = syntactic_transitivity2,
+         schema = cxn_type) %>% 
+  mutate(schema_core = schema, 
+         schema_core = replace(schema_core, str_detect(schema, "^recipient-obj"), "recipient-obj"), 
+         schema_core = replace(schema_core, str_detect(schema, "^theme-obj"), "theme-obj"), 
+         schema_core = replace(schema_core, str_detect(schema, "^double-obj"), "double-obj"),
+         trv = factor(trv, levels = c("ditransitive", "monotransitive", "intransitive")),
+         schema = factor(schema, levels = c("double-obj_nominal-theme", "double-obj_clausal-theme","theme-obj.np", "theme-obj.np_recipient-oblique", "theme-obj.clause", "recipient-obj", "recipient-obj_theme.np-oblique", "intransitive")),
+         schema_core = factor(schema_core, levels = c("double-obj", "theme-obj", "recipient-obj", "intransitive"))) %>% 
+  arrange(schema)
+
+cxn_transitivity_menawari_overall <- cxn_transitivity_menawari %>% 
+  group_by(trv) %>% 
+  summarise(n = sum(n), .groups = "drop") %>% 
+  mutate(perc = round(n/sum(n) * 100))
+
+trv_ovr_i_input <- cxn_transitivity_menawari_overall$n
+names(trv_ovr_i_input) <- cxn_transitivity_menawari_overall$trv
+cxn_transitivity_menawari_overall_chisq <- chisq.test(trv_ovr_i_input)
+
+cxn_menawari_n <- cxn_transitivity_menawari$n
+names(cxn_menawari_n) <- cxn_transitivity_menawari$schema
+cxn_menawari_chisq <- chisq.test(cxn_menawari_n)
+cxn_menawari_residuals <- tibble(schema = names(cxn_menawari_n),
+                                     residuals_values = unname(cxn_menawari_chisq$residuals),
+                                     directions = ifelse(residuals_values > 0, "positif", "negatif")) %>% 
+  mutate(schema = factor(schema, levels = names(cxn_menawari_n)),
+         directions = factor(directions, levels = c("positif", "negatif")))
+```
+
+
+
+
+
+Kajian terdahulu [@sneddon_1996, hlm. 96; @kaswanti_1997] memprediksi kemunculan dominan *menawari* pada Konstruksi Objek Ganda (*double-object construction* [DO]) (contoh (@dobj-noun-theme) dan (@dobj-clause-theme)). Akan tetapi, analisis korpus kali ini menunjukkan bahwa konstruksi DO hanya mencakup `r pull(filter(cxn_transitivity_menawari_overall, trv == "ditransitive"), perc)`% (n=`r pull(filter(cxn_transitivity_menawari_overall, trv == "ditransitive"), n)`) dari total `r sum(cxn_transitivity_menawari_overall$n)` kemunculan *menawari*. Tidak kurang dari `r pull(filter(cxn_transitivity_menawari_overall, trv == "monotransitive"), perc)`% pemakaian *menawari* mencerminkan Konstruksi Monotransitif(-Oblik) (n=`r pull(filter(cxn_transitivity_menawari_overall, trv == "monotransitive"), n)`), perilaku (i) yang tidak bisa dikatakan minoritas secara statistik (lihat [Gambar \@ref(fig:fig-3-and-4-combined)](#fig-3-and-4-combined)) dan (ii) yang tidak diperkirakan sebelumnya. Proporsi tersisa dari *menawari* adalah Konstruksi Intransitif (`r pull(filter(cxn_transitivity_menawari_overall, trv == "intransitive"), perc)`%; n=`r pull(filter(cxn_transitivity_menawari_overall, trv == "intransitive"), n)`). Distribusi ketiga tipe konstruksi ini sangat signifikan secara statistik (*X*^2^~Goodness~ ~of~ ~fit~=`r round(cxn_transitivity_menawari_overall_chisq$statistic, 2)`, *df*=`r cxn_transitivity_menawari_overall_chisq$parameter`, *p*`r if (cxn_transitivity_menawari_overall_chisq$p.value < 0.0001) " < 0.0001"`).
+
+Contoh (@intransitive-menawari) menampilkan pemakaian *menawari* dalam Konstruksi Intransitif.
+
+(@intransitive-menawari) Sudah ada klub yang *menawari*, salah satunya Persiba Balikpapan. (ind_news_2011_300K:118343)
+
+Pemakaian *menawari* dalam Konstruksi Monotransitif(-Oblik) menarik dari sudut pandang tipologi, khususnya terkait aliansi (*alignment*) gramatikal untuk verba dwitransitif [@malchukov_ditransitive_2010; @haspelmath_ditransitive_2013]. 
+
+Terdapat tiga tipe aliansi gramatikal untuk peran `r ftext("Tema", ft_frame_element)` dan `r ftext("Calon_penerima", ft_frame_element)` bagi verba dwitransitif. Tipe pertama disebut **Aliansi Objek Tak-langsung**/**Indirektif** ("*Indirect object/indirective alignment*" [@malchukov_ditransitive_2010, hlm. 3]) (contoh (@dative-cxn-menawarkan) dan (@monotransitif-datif-menawari)). 
+
+(@monotransitif-datif-menawari) PM Turki Tayyip ERdogan mengatakan negaranya telah *menawari* ["jaminan"]~Tema~ *pada* [Gaddafi]~Calon_penerima~ (ind_news_2011_300K:257458)
+
+Aliansi Indirektif ini merealisasikan peran `r ftext("Calon_penerima", ft_frame_element)` (*Gaddafi*) sebagai argumen oblik yang dimarkahi dengan preposisi lokatif (*pada*) sedangkan peran `r ftext("Tema", ft_frame_element)` (*jaminan*) tidak dimarkahi dan berperilaku sama dengan objek langsung konstruksi monotransitif; tipe inilah yang dikenal dengan Konstruksi (Monotransitif) Datif (*Dative Constructions*).
+
+Tipe aliansi kedua disebut **Aliansi Objek Sekunder**/**Sekundatif** ("*Secondary Object*/*Secundative Alignment*") [@malchukov_ditransitive_2010, hlm. 3-4] (contoh (@monotransitif-sekundatif-menawari)). 
+
+(@monotransitif-sekundatif-menawari) PSIS *menawari* [Bambang Nurdiansyah]~Calon_penerima~ *dengan* [satu unit mobil]~Tema~ (ind_news_2008_300K:17905)
+
+Pada Aliansi Sekundatif, peran `r ftext("Tema", ft_frame_element)` (*satu unit mobil*) dimarkahi dengan preposisi atau kasus (*case*), biasanya Instrumental, seperti *dengan* pada (@monotransitif-sekundatif-menawari). Kemudian, peran `r ftext("Calon_penerima", ft_frame_element)` (*Bambang Nurdiansyah*) mengisi slot objek langsung. Kemunculan *menawari* dalam konstruksi dengan Aliansi Sekundatif tidak diprediksi oleh pemaparan sebelumnya terkait *menawari* yang dilandasi atas (satu butir) data [mis. @sneddon_1996, hlm. 96]. Keragaman perilaku konstruksional *menawari* ini (yang berimplikasi pada realisasi sintaksis peran semantisnya) sekaligus menunjukkan pentingnya pengamatan terhadap sejumlah (sampel) data pemakaian bahasa alamiah/korpus dalam membangun deskripsi gramatikal. Terlepas dari ketimpangan antara teori dan data empiris untuk *menawari* tersebut, Aliansi Sekundatif sebenarnya juga lumrah ditemukan di bahasa-bahasa Timor-Alor-Pantar di Indonesia timur [@klamer2012development].
+
+Selanjutnya, sampel data untuk *menawari* juga memperlihatkan pemakaian Konstruksi Monotransitif tanpa argumen oblik preposisional, yang sekaligus mengindikasikan peniadaan salah satu dari peran `r ftext("Tema", ft_frame_element)` dan `r ftext("Calon_penerima", ft_frame_element)`.
+
+(@recipient-obj-menawari) "Logikanya dia *menawari* [saya]~Calon_penerima~ karena saya yang menolak tanah di kawasan itu, tidak aman," paparnya. (ind_news_2008_300K:293578)
+(@theme-obj-menawari-nominal) "Jepang sudah *menawari* [bantuan pinjaman hingga dua miliar dolar AS]~Tema_nominal~," katanya. (ind_news_2010_300K:139994)
+(@theme-obj-menawari-clausal) belum ada partai politik (parpol) yang *menawari* secara langsung [untuk maju sebagai capres]~Tema_klausal~ (ind_news_2008_300K:78195)^[Secara teoretis, `r ftext("Tema", ft_frame_element)` berjenis klausa pelengkap *untuk maju sebagai capres* pada (@theme-obj-menawari-clausal) dapat dinyatakan secara nominal menjadi, misalnya, *posisi capres*.]
+
+Dua varian konstruksi tersebut berkaitan dengan kemunculan peran `r ftext("Calon_penerima", ft_frame_element)` (@recipient-obj-menawari) atau `r ftext("Tema", ft_frame_element)` (@theme-obj-menawari-nominal - @theme-obj-menawari-clausal) pada slot argumen objek langsung dari *menawari*.
+
+Aliansi ketiga disebut dengan Aliansi Netral ("*Neutral Alignment*") [@malchukov_ditransitive_2010, hlm. 4] yang mencerminkan Konstruksi Objek Ganda di mana peran `r ftext("Calon_penerima", ft_frame_element)` dan `r ftext("Tema", ft_frame_element)` tidak dimarkahi (lihat kembali contoh (@dobj-noun-theme)); aliansi ketiga ini berasosiasi kuat dengan *menawari*. Data-data sebelumnya menunjukkan bahwa, secara kategorikal, satu bentuk verba dengan tiga peran semantis kunci seperti *menawari* dapat digunakan pada tiga tipe aliansi gramatikal untuk Konstruksi Dwitransitif. Keragaman aliansi gramatikal ini berimplikasi pada penonjolan peran semantis dari *menawari* berdasarkan Prinsip Korespondensi (§[\@ref(ProfiledParticipantRoles)](#ProfiledParticipantRoles)) (yaitu, peran semantis mana yang mengisi slot argumen inti konstruksi gramatikal *menawari*).
+
+[Gambar \@ref(fig:fig-3-and-4-combined)](#fig-3-and-4-combined)a berikut menampilkan frekuensi sub-tipe konstruksi gramatikal^[Berikut ini adalah keterangan kode sub-tipe konstruksi pada aksis vertikal pada [Gambar \@ref(fig:fig-3-and-4-combined)](#fig-3-and-4-combined): `r ftext("DO_Nml-Th", ft_frame_element)`=*DoubleObject*_*Nominal*-*Theme* (Konstruksi Objek Ganda dengan `r ftext("Tema", ft_frame_element)` nominal) (contoh (@dobj-noun-theme)); `r ftext("DO_Cl-Th", ft_frame_element)`=*DoubleObject*_*Clausal*-*Theme* (Konstruksi Objek Ganda dengan `r ftext("Tema", ft_frame_element)` klausal) (@dobj-clause-theme); `r ftext("Th-OBJ.Nml", ft_frame_element)`=*ThemeObject*.*Nominal* (Konstruksi Monotransitif dengan `r ftext("Tema", ft_frame_element)` sebagai objek nominal) (@theme-obj-menawari-nominal); `r ftext("Th-OBJ.Nml_Rec-OBL", ft_frame_element)`=*ThemeObject*.*Nominal*_*Potential_recipient*-*OBLIQUE* (Konstruksi Monotransitif dengan `r ftext("Tema", ft_frame_element)` sebagai objek nominal dan `r ftext("Calon_penerima", ft_frame_element)` oblik) (@monotransitif-datif-menawari); `r ftext("Th-OBJ.Cl", ft_frame_element)`=*ThemeObject*.*Clausal* (Konstruksi Monotransitif dengan `r ftext("Tema", ft_frame_element)` sebagai objek klausal (@theme-obj-menawari-clausal); `r ftext("Rec-OBJ", ft_frame_element)`=*Potential_recipient.Object* (Konstruksi Monotransitif dengan `r ftext("Calon_penerima", ft_frame_element)` sebagai objek (@recipient-obj-menawari); `r ftext("Rec-OBJ_Th.Nml-OBL", ft_frame_element)`=*Potential_recipient.Object*_*Nominal*.*Theme*-*OBLIQUE* (Konstruksi Monotransitif dengan `r ftext("Calon_penerima", ft_frame_element)` sebagai objek dan `r ftext("Tema", ft_frame_element)` nominal oblik) (@monotransitif-sekundatif-menawari); `r ftext("INTR", ft_frame_element)`=Konstruksi Intransitif (@intransitive-menawari).] untuk *menawari*, yang di antaranya mencerminkan ketiga tipologi aliansi gramatikal Konstruksi Dwitransitif sebelumnya. [Gambar \@ref(fig:fig-3-and-4-combined)](#fig-3-and-4-combined)b menampilkan sub-tipe konstruksi yang secara signifikan berasosiasi positif (muncul lebih sering dari yang diharapkan) berdasarkan nilai *Pearson Residual* dari hasil uji signifikansi *Chi-Squared Goodness-of-Fit* terhadap data frekuensi pada [Gambar \@ref(fig:fig-3-and-4-combined)](#fig-3-and-4-combined)a.
+
+
+```{r fig-3-cxn-menawari, fig.cap = "Frekuensi tipe konstruksi untuk *menawari*", fig.asp = 0.45}
+colour_brew <- c(brewer.pal(11, "RdYlBu")[c(2, 5, 10)], "gray90")
+fig3 <- cxn_transitivity_menawari %>% 
+  ggplot(aes(x = fct_rev(schema), y = n, fill = schema_core)) + 
+  geom_col(colour = "gray30", size = .2) + 
+  coord_flip() + 
+  theme_classic() + 
+  geom_text(aes(label = paste("n=", n, sep = "")), 
+            position = position_dodge(.9), 
+            hjust = 1.25, 
+            colour = if_else(cxn_transitivity_menawari$schema_core %in% 
+                               c("double-obj", "recipient-obj"), 
+                             "white", "black"),
+            size = 2) + 
+  labs(x = "Konstruksi",
+       fill = "", 
+       y = "Frekuensi") + 
+  theme(axis.text.y = element_text(size = 7),
+        axis.text.x = element_text(size = 7),
+        legend.title = element_text(size = 7, family = "serif"),
+        legend.text = element_text(size = 6),
+        axis.title.y = element_text(size = 7, family = "serif"),
+        axis.title.x = element_text(size = 7, family = "serif"),
+        legend.background = element_rect(fill = "transparent", colour = "transparent"),
+        legend.position = c(0.85, 0.2),
+        legend.key.size = unit(0.7, "line"),
+        plot.title = element_text(size = 7, face = "bold")) +
+  scale_fill_manual(labels = c("DO", "Th-OBJ", "Rec-OBJ", "INTR"),
+                    values = colour_brew,
+                    breaks = c("double-obj", "theme-obj", "recipient-obj", "intransitive")) +
+  scale_x_discrete(labels = c("double-obj_nominal-theme" = "DO_Nml-Th", "double-obj_clausal-theme" = "DO_Cl-Th", "theme-obj.np" = "Th-OBJ.Nml", "theme-obj.np_recipient-oblique" = "Th-OBJ.Nml_Rec-OBL", "theme-obj.clause" = "Th-OBJ.Cl", "recipient-obj_theme.np-oblique" = "Rec-OBJ_Th.Nml-OBL", "recipient-obj" = "Rec-OBJ", "intransitive" = "INTR")) +
+  ggtitle("(a)") # +
+  # annotate("text", x = 8, y = 7, label = "DoubleObject_Nominal-Theme", colour = "white", size = 1.65) +
+  # annotate("text", x = 7, y = 7, label = "DoubleObject_Clausal-Theme", colour = "white", size = 1.65) +
+  # annotate("text", x = 6, y = 7, label = "Theme-OBJECT.Nominal", colour = "black", size = 1.65) +
+  # annotate("text", x = 5, y = 10, label = "Theme-OBJECT.Nominal_Recipient-OBLIQUE", colour = "black", size = 1.65) +
+  # annotate("text", x = 4, y = 7, label = "Theme-OBJECT.Clausal", colour = "black", size = 1.65) +
+  # annotate("text", x = 2, y = 11, label = "Recipient-OBJECT_Theme.Nominal-OBLIQUE", colour = "black", size = 1.65) +
+  # annotate("text", x = 3, y = 13, label = "Recipient-OBJECT", colour = "black", size = 1.65) +
+  # annotate("text", x = 1, y = 7.5, label = "INTRANSITIVE", colour = "black", size = 1.65)
+```
+
+```{r fig-4-cxn-menawari-residuals, fig.asp = 0.45}
+colour_low <- hcl.colors(palette = "Blue-Red 2", n = 5)[5]
+colour_mid <- hcl.colors(palette = "Blue-Red 2", n = 5)[3]
+colour_high <- hcl.colors(palette = "Blue-Red 2", n = 5)[1]
+fig4 <- cxn_menawari_residuals %>% 
+  arrange(desc(residuals_values)) %>% 
+  mutate(schema = fct_reorder(schema, residuals_values)) %>%
+  ggplot(aes(x = schema, y = residuals_values, fill = residuals_values)) + 
+  geom_bar(stat = "identity", color = "gray30", size = .2) + 
+  scale_fill_gradient2(low = colour_low,
+                       mid = colour_mid,
+                       high = colour_high) +
+  coord_flip() +
+  theme_classic() +
+  scale_x_discrete(labels = c("double-obj_nominal-theme" = "DO_Nml-Th", "double-obj_clausal-theme" = "DO_Cl-Th", "theme-obj.np" = "Th-OBJ.Nml", "theme-obj.np_recipient-oblique" = "Th-OBJ.Nml_Rec-OBL", "theme-obj.clause" = "Th-OBJ.Cl", "recipient-obj_theme.np-oblique" = "Rec-OBJ_Th.Nml-OBL", "recipient-obj" = "Rec-OBJ", "intransitive" = "INTR")) +
+  labs(x = "",
+       y = "*Pearson Residual*",
+       fill = "Residual") +
+  theme(axis.text.y = element_text(size = 7),
+        axis.text.x = element_text(size = 7),
+        legend.title = element_text(size = 7, family = "serif"),
+        legend.text = element_text(size = 6),
+        axis.title.y = element_text(size = 7, family = "serif"),
+        axis.title.x = element_markdown(size = 7, family = "serif"),
+        legend.background = element_rect(fill = "transparent", colour = "transparent"),
+        legend.position = c(0.75, 0.25),
+        legend.key.size = unit(0.7, "line"),
+        plot.title = element_text(size = 7, face = "bold")) +
+  ggtitle("(b)") +
+  annotate("text", x = 1, y = -1, label = "-", colour = "black", size = 4) +
+  annotate("text", x = 2, y = -1, label = "-", colour = "black", size = 4) +
+  annotate("text", x = 3, y = -1, label = "-", colour = "black", size = 4) +
+  annotate("text", x = 4, y = -1, label = "-", colour = "black", size = 4) +
+  annotate("text", x = 5, y = -1, label = "-", colour = "black", size = 4) +
+  annotate("text", x = 6, y = 1, label = "+", colour = "black", size = 4) +
+  annotate("text", x = 7, y = 1, label = "+", colour = "black", size = 4) +
+  annotate("text", x = 8, y = 1, label = "+", colour = "white", size = 4)
+```
+
+
+```{r fig-3-and-4-combined, fig.align = 'left', fig.asp = .5, fig.cap = "Sub-tipe konstruksi gramatikal (a) dan preferensinya terhadap *menawari* (b)"}
+grid.arrange(fig3, fig4, nrow = 1, ncol = 2)
+```
+
+
+::: {custom-style="First Paragraph"}
+
+Terdapat perbedaan distribusi yang sangat signifikan di antara kedelapan sub-tipe konstruksi gramatikal untuk *menawari* (*X*^2^~Goodness~ ~of~ ~fit~=`r round(cxn_menawari_chisq$statistic, 2)`, *df*=`r cxn_menawari_chisq$parameter`, *p*`r if (cxn_menawari_chisq$p.value < 0.0001) " < 0.0001"`). Sub-tipe yang paling dominan untuk *menawari* adalah sub-tipe dari Konstruksi Objek Ganda, yaitu, konstruksi yang merealisasikan peran `r ftext("Tema", ft_frame_element)` (i) sebagai nomina (`r ftext("DO_Nml-Th", ft_frame_element)` [*DoubleObject*_*Nominal*-*Theme*]; lihat kembali contoh (@dobj-noun-theme)) dan (ii) sebagai klausa (`r ftext("DO_Cl-Th", ft_frame_element)` [*DoubleObject*_*Clausal*-*Theme*]; contoh (@dobj-clause-theme)) ([Gambar \@ref(fig:fig-3-and-4-combined)](#fig-3-and-4-combined)b). Tendensi positif ini tidak begitu mengagetkan mengingat Konstruksi Objek Ganda secara kolektif dominan dalam sampel (`r pull(filter(cxn_transitivity_menawari_overall, trv == "ditransitive"), perc)`%) seperti yang telah dibahas sebelumnya. Namun, kajian terhadap sub-tipe konstruksi gramatikal kali ini memperlihatkan bahwa hanya satu sub-tipe Konstruksi Monotransitif yang dominan untuk *menawari*, yaitu konstruksi yang memposisikan `r ftext("Tema", ft_frame_element)` sebagai objek langsung (nominal) (lihat kembali contoh (@theme-obj-menawari-nominal)) tanpa merealisasikan argumen oblik (untuk peran `r ftext("Calon_penerima", ft_frame_element)`), meskipun Konstruksi Monotransitif secara kolektif juga cukup dominan untuk *menawari* (`r pull(filter(cxn_transitivity_menawari_overall, trv == "monotransitive"), perc)`%) dalam sampel.
+
+:::
+
+```{r cxn-analysis-menawarkan}
+cxn_transitivity_menawarkan <- menawarkan %>% 
+  mutate(syntactic_transitivity = replace(syntactic_transitivity, dobj_syntax == "pp", "intransitive"),
+         schema = replace(schema, syntactic_transitivity == "intransitive" & dobj_syntax == "pp", "intransitive_theme-oblique"),
+         schema = replace(schema, schema == "intransitive" & is.na(dobj_syntax), "intransitive_recipient-oblique"),
+         schema = replace(schema, dobj_syntax == "clause" & schema == "theme-obj_recipient-oblique", "theme-obj-clause_recipient-oblique"),
+         schema = replace(schema, dobj_syntax == "np" & schema == "theme-obj_recipient-oblique", "theme-obj-np_recipient-oblique"),
+         schema = replace(schema, dobj_syntax == "np" & recipient_gf == "dobj_modifier", "theme-obj-np"),
+         schema = replace(schema, dobj_syntax == "np" & is.na(recipient_gf), "theme-obj-np"),
+         schema = replace(schema, dobj_syntax == "clause" & is.na(recipient_gf), "theme-obj-clause")) %>%
+  count(syntactic_transitivity, schema) %>% 
+  rename(trv = syntactic_transitivity,
+         n_schema = n) %>% 
+  group_by(trv) %>% 
+  mutate(n_trv = sum(n_schema)) %>% 
+  ungroup() %>% 
+  mutate(perc_trv = round(n_trv/sum(n_schema) * 100),
+         perc_schema = round(n_schema/sum(n_schema) * 100),
+         schema_collapse = if_else(perc_schema < 5, "misc.", schema))
+
+cxn_menawarkan_collapse <- cxn_transitivity_menawarkan %>% 
+  group_by(schema_collapse) %>% 
+  summarise(n_schema = sum(n_schema), .groups = "drop") %>% 
+  mutate(perc = round(n_schema/sum(n_schema) * 100),
+         schema_abbr = factor(c("Lainnya", "Th-OBJ.Cl", "Th-OBJ.Nml", "Th-OBJ.Nml_Rec-OBL"), levels = c("Th-OBJ.Nml", "Th-OBJ.Nml_Rec-OBL", "Th-OBJ.Cl", "Lainnya")),
+         schema_collapse = factor(schema_collapse, levels = c("theme-obj-np", "theme-obj-np_recipient-oblique", "theme-obj-clause", "misc.")),
+         trv = factor(c("Lainnya", rep("Monotransitive", 3)), levels = c("Monotransitive", "Lainnya"))) %>% 
+  arrange(schema_abbr)
+
+trv_ovr_kan_input <- cxn_menawarkan_collapse$n_schema
+names(trv_ovr_kan_input) <- cxn_menawarkan_collapse$schema_collapse
+cxn_transitivity_menawarkan_chisq <- chisq.test(trv_ovr_kan_input)
+
+cxn_menawarkan_residuals <- tibble(schema = names(cxn_transitivity_menawarkan_chisq$residuals),
+                                     residuals_values = unname(cxn_transitivity_menawarkan_chisq$residuals),
+                                     directions = ifelse(residuals_values > 0, "positif", "negatif")) %>% 
+  mutate(schema = factor(schema, levels = c("theme-obj-np", "theme-obj-np_recipient-oblique", "theme-obj-clause", "misc.")),
+         directions = factor(directions, levels = c("positif", "negatif"))) %>% 
+  arrange(schema) %>% 
+  mutate(schema_abbr = factor(c("Th-OBJ.Nml", "Th-OBJ.Nml_Rec-OBL", "Th-OBJ.Cl", "Lainnya"), levels = c("Th-OBJ.Nml", "Th-OBJ.Nml_Rec-OBL", "Th-OBJ.Cl", "Lainnya")))
+```
+
+```{r fig-5-cxn-menawarkan, fig.cap = "Frekuensi tipe konstruksi untuk *menawari*", fig.asp = 0.45}
+colour_brew <- c(brewer.pal(11, "RdYlBu")[5], "gray90")
+fig5 <- cxn_menawarkan_collapse %>% 
+  ggplot(aes(x = reorder(schema_abbr, n_schema), y = n_schema, fill = trv)) + 
+  geom_col(colour = "gray30", size = .2) + 
+  coord_flip() + 
+  theme_classic() + 
+  geom_text(aes(label = paste("n=", n_schema, sep = "")), 
+            position = position_dodge(.9), 
+            hjust = if_else(cxn_menawarkan_collapse$n_schema < 10, -.5, 1.15), 
+            colour = "black",
+            size = 2) + 
+  labs(x = "Konstruksi",
+       fill = "", 
+       y = "Frekuensi") + 
+  theme(axis.text.y = element_text(size = 7),
+        axis.text.x = element_text(size = 7),
+        legend.title = element_text(size = 7, family = "serif"),
+        legend.text = element_text(size = 6),
+        axis.title.y = element_text(size = 7, family = "serif"),
+        axis.title.x = element_text(size = 7, family = "serif"),
+        legend.background = element_rect(fill = "transparent", colour = "transparent"),
+        legend.position = c(0.7, 0.2),
+        legend.key.size = unit(0.7, "line"),
+        plot.title = element_text(size = 7, face = "bold")) +
+  scale_fill_manual(labels = c("Th-OBJ", "Lainnya"),
+                    values = colour_brew) +
+  ggtitle("(a)")
+```
+
+```{r fig-6-cxn-menawarkan-residuals, fig.asp = 0.45}
+colour_low <- hcl.colors(palette = "Blue-Red 2", n = 5)[5]
+colour_mid <- hcl.colors(palette = "Blue-Red 2", n = 5)[3]
+colour_high <- hcl.colors(palette = "Blue-Red 2", n = 5)[1]
+fig6 <- cxn_menawarkan_residuals %>% 
+  mutate(schema = fct_reorder(schema, residuals_values)) %>%
+  ggplot(aes(x = reorder(schema_abbr, residuals_values), y = residuals_values, fill = residuals_values)) + 
+  geom_bar(stat = "identity", color = "gray30", size = .2) + 
+  scale_fill_gradient2(low = colour_low,
+                       mid = colour_mid,
+                       high = colour_high) +
+  coord_flip() +
+  theme_classic() +
+  labs(x = "",
+       y = "*Pearson Residual*",
+       fill = "Residual") +
+  theme(axis.text.y = element_text(size = 7),
+        axis.text.x = element_text(size = 7),
+        legend.title = element_text(size = 7, family = "serif"),
+        legend.text = element_text(size = 6),
+        axis.title.y = element_text(size = 7, family = "serif"),
+        axis.title.x = element_markdown(size = 7, family = "serif"),
+        legend.background = element_rect(fill = "transparent", colour = "transparent"),
+        legend.position = c(0.75, 0.25),
+        legend.key.size = unit(0.7, "line"),
+        plot.title = element_text(size = 7, face = "bold")) +
+  ggtitle("(b)") +
+  annotate("text", x = 1, y = -1, label = "-", colour = "black", size = 4) +
+  annotate("text", x = 2, y = -.5, label = "-", colour = "black", size = 4) +
+  annotate("text", x = 4, y = 1, label = "+", colour = "white", size = 4)
+  
+```
+
+Selanjutnya, dibandingkan dengan *menawari*, bentuk *menawarkan* cenderung lebih konservatif terkait sub-tipe konstruksi gramatikalnya (perhatikan [Gambar \@ref(fig:fig-5-and-6-combined)](#fig-5-and-6-combined)). Hal ini sedikitnya mulai dapat diperkirakan dari hasil analisis penonjolan partisipan untuk *menawarkan* (lihat kembali §[\@ref(profiling)](#profiling)).
+
+
+```{r fig-5-and-6-combined, fig.align = 'left', fig.asp = .45, fig.cap = "Sub-tipe konstruksi gramatikal (a) dan preferensinya terhadap *menawarkan* (b)"}
+gridExtra::grid.arrange(fig5, fig6, nrow = 1, ncol = 2)
+```
+
+
+::: {custom-style="First Paragraph"}
+
+*Menawarkan* dalam sampel tidak pernah ditemukan muncul dalam Konstruksi Objek Ganda, namun secara sangat dominan muncul dalam Konstruksi Monotransitif (*X*^2^~Goodness~ ~of~ ~fit~=`r round(cxn_transitivity_menawarkan_chisq$statistic, 2)`, *df*=`r cxn_transitivity_menawarkan_chisq$parameter`, *p*`r if (cxn_transitivity_menawarkan_chisq$p.value < 0.0001) " < 0.0001"`), utamanya yang menonjolkan peran `r ftext("Tema", ft_frame_element)` sebagai objek langsung dan meniadakan peran `r ftext("Calon_penerima", ft_frame_element)` (`r ftext("Th-OBJ.Nml", ft_frame_element)`; `r cxn_menawarkan_collapse %>% filter(str_detect(schema_collapse, "theme-obj-np$")) %>% pull(perc)`%). Di sampel data, hanya ditemukan `r round(sum(pull(filter(cxn_transitivity_menawarkan, str_detect(schema, "recipient")), n_schema))/nrow(menawarkan) * 100)`% pemakaian *menawarkan* yang secara eksplisit merealisasikan peran `r ftext("Calon_penerima", ft_frame_element)` sebagai argumen oblik preposisional (`r ftext("Th-OBJ.Nml_Rec-OBL", ft_frame_element)`) (yang mencerminkan Aliansi Indirektif) (contoh (@dative-cxn-menawarkan)). Jadi, meskipun *menawarkan* memiliki frekuensi yang jauh lebih tinggi (dibandingkan dengan *menawari*), dominasi tersebut tidak mengikutkan tingginya variasi konstruksi gramatikalnya karena secara relatif didominasi oleh satu sub-tipe konstruksi (`r ftext("Th-OBJ.Nml", ft_frame_element)`).
+
+:::
+
+Hasil yang ditampilkan pada [Gambar \@ref(fig:fig-5-and-6-combined)](#fig-5-and-6-combined) tidak sepenuhnya sejalan dengan ide yang diajukan oleh kajian terdahulu [@sneddon_1996, hlm. 96; @kaswanti_1997, hlm. 236] terkait asosiasi sub-tipe Konstruksi Monotransitif Datif dengan *menawarkan*, karena secara statistik sub-tipe tersebut tidak begitu dominan. Data korpus sebaliknya menunjukkan bahwa konstruksi yang dominan untuk *menawarkan* tidak secara eksplisit menyatakan peran `r ftext("Calon_penerima", ft_frame_element)` (contoh (@theme-obj-menawarkan)) sehingga tidak menonjolkan peran tersebut. 
+
+(@theme-obj-menawarkan) Dalam lelang putaran pertama 2010, pemerintah *menawarkan* [enam blok]~Tema~ melalui mekanisme penawaran langsung. (ind_news_2010_300K:30228)
+
+Satu hal yang dapat diasumsikan dari peniadaan peran `r ftext("Calon_penerima", ft_frame_element)` seperti pada contoh (@theme-obj-menawarkan) adalah peran tersebut sudah muncul pada kalimat(-kalimat) (atau klausa) sebelumnya, atau dipahami secara umum berdasarkan konteks wacana di mana kalimat tersebut muncul, sehingga tidak wajib direalisasikan secara eksplisit. Asumsi ini masih perlu diuji kembali. Rancangan korpus yang digunakan penelitian ini belum memungkinkan hal tersebut karena korpus Leipzig terdiri atas butir-butir kalimat yang telah diacak dan dibongkar dari teks aslinya (untuk terbebas dari aturan Hak Cipta di Jerman di mana korpus ini dirancang). Hal tersebut menimbulkan kesulitan dalam merekonstruksi konteks kalimat yang ditemui dalam korpus menjadi teks aslinya.
+
+Berikut ini adalah dua data pemakaian Intransitif untuk *menawarkan* dalam sampel dengan peran `r ftext("Calon_penerima", ft_frame_element)` (@intransitive-menawarkan-recipient-oblique) dan `r ftext("Tema", ft_frame_element)` (@intransitive-menawarkan-theme-oblique) sebagai argumen oblik bermarkah *kepada* dan *sebagai*.
+
+(@intransitive-menawarkan-recipient-oblique) "Ini semua tergantung dari kreativitas para penyedia content dalam *menawarkan* _**kepada**_ [masyarakat]~Calon_penerima~," jelasnya. (ind_news_2008_300K:34188)
+(@intransitive-menawarkan-theme-oblique) "Banyak yang sudah deklarasikan sebagai capres, di balik layar *menawarkan* _**sebagai**_ [wakil (Megawati)]~Tema~,\" kata Pramono Anung di Jakarta (ind_news_2008_300K:98526)
+
+## Kontaminasi konstruksional *menawarkan* terhadap *menawari*? {#kontaminasi}
+
+Yang juga masih menjadi pertanyaan lanjutan adalah preferensi konstruksional *menawari*, layaknya *menawarkan*, terhadap Konstruksi Monotransitif dengan `r ftext("Tema", ft_frame_element)` sebagai objek nominal (`r ftext("Th-OBJ.Nml", ft_frame_element)`; lihat kembali kalimat (@theme-obj-menawari-nominal)), preferensi yang tidak diprediksi dalam teori [mis. @sneddon_1996, hlm. 96]. Kajian terdahulu terkait verba bervalensi semantis tiga dengan akhiran -*i* [mis. @arka_linguistic_2009; @kroeger_2007; @kaswanti_1997] berpandangan bahwa peran yang mengisi slot argumen objek primer/langsung adalah peran yang dapat ditafsirkan sebagai tujuan akhir dari suatu aksi sedangkan peran untuk benda yang berpindah (misalnya `r ftext("Tema", ft_frame_element)`) mengisi slot objek sekunder/tak langsung; dalam konteks *menawari*, peran `r ftext("Calon_penerima", ft_frame_element)` dapat ditafsirkan secara metaforis merujuk pada titik akhir dari aksi memberikan penawaran dan secara teoretis seharusnya lebih dominan muncul pada posisi objek langsung (yang setidaknya terbukti dengan dominasi Konstruksi Objek Ganda).
+
+Mengingat ditemukannya preferensi positif *menawari* terhadap konstruksi `r ftext("Th-OBJ.Nml", ft_frame_element)`, yang menjadi profil konstruksional utama untuk *menawarkan*, mungkinkah preferensi konstruksional dari *menawari* tersebut merupakan suatu "kontaminasi konstruksional" oleh *menawarkan*, yang memiliki frekuensi secara signifikan jauh lebih tinggi (`r verb_freq[verb_freq$match=="menawarkan", ][[2]]`) dibandingkan *menawari* (`r verb_freq[verb_freq$match=="menawari", ][[2]]`) dalam kelima korpus? Dengan asumsi bahwa penutur akan lebih sering mendengar dan mengamati kemunculan *menawarkan*, dibandingkan *menawari*,^[Perlu dicatat bahwa rasio kemunculan *menawari* terhadap *menawarkan* adalah 1 berbanding `r round(verb_freq[verb_freq$match=="menawarkan", ][[2]]/verb_freq[verb_freq$match=="menawari", ][[2]])`. Rasio ini berarti bahwa pada satu kali kemunculan *menawari*, sudah terdapat `r round(verb_freq[verb_freq$match=="menawarkan", ][[2]]/verb_freq[verb_freq$match=="menawari", ][[2]])` kali kemunculan *menawarkan*.] utamanya dalam konstruksi yang dominan tadi (`r ftext("Th-OBJ.Nml", ft_frame_element)`), dari sudut pandang *usage-based model of language*, diasumsikan profil konstruksional *menawarkan* terpatri dalam khasanah kebahasaan penutur [@bybee_usagebased_2013; @langacker_1987, hlm. 59; @goldberg_2006, hlm. 5]. Keterpatrian ini kemudian dapat "mengkontaminasi" profil konstruksional *menawari* [mis. melalui analogi, lihat @croft_cruse_2004, hlm. 304], yang frekuensi kemunculannya sangat jarang, namun pada tataran morfologis masih terhubung secara paradigmatis dengan *menawarkan* dalam jejaring khasanah kebahasaan penutur [lihat @audring_mothers_2019]. Ide terkait "kontaminasi konstruksional" di antara konstruksi yang berkaitan secara paradigmatis dan bermakna mirip, seperti oleh *menawarkan* terhadap *menawari*, masih bersifat spekulatif dan mesti dibuktikan lebih lanjut, yang di luar lingkup makalah ini [periksa @pijpops_contamination_2016 untuk pemaparan lebih rinci terkait kontaminasi konstruksional]. 
+
+Kemungkinan lain yang dapat diteliti adalah faktor yang mempengaruhi penggunaan monotransitif dari *menawari*/*menawarkan* tanpa diikuti argumen oblik. Contohnya, apakah terdapat kaitan antara penggunaan monotransitif untuk *menawari* dengan disebutkannya suatu peran semantis pada kalimat sebelumnya, sehingga telah dipahami oleh pembaca dan dapat dihilangkan? 
+
+# Penutup
+
+Dengan mengkaji pasangan verba *menawari*/*menawarkan* dari sudut pandang linguistik korpus kuantitatif, Gramatika Konstruksional (§[\@ref(CxG)](#CxG)) dan Bingkai Semantik (§[\@ref(FrameSemantics)](#FrameSemantics)), makalah ini menemukan perbedaan peran semantis yang ditonjolkan oleh masing-masing verba (§[\@ref(profiling)](#profiling)), meskipun pasangan verba ini, secara konseptual, berbagi tiga peran semantis kunci. Penonjolan peran semantis tersebut cenderung berkaitan dengan (sub-)tipe konstruksi gramatikal yang dominan muncul dengan kedua verba. Sejalan dengan hipotesis yang diajukan penelitian kualitatif terdahulu (§[\@ref(hipotesis)](#hipotesis)), makalah ini menemukan bahwa *menawari* menonjolkan peran `r ftext("Agen_penawaran", ft_frame_element)`, `r ftext("Calon_penerima", ft_frame_element)` dan `r ftext("Tema", ft_frame_element)` dalam Konstruksi Objek Ganda ([Gambar \@ref(fig:fig-3-and-4-combined)](#fig-3-and-4-combined)) sedangkan *menawarkan* relatif sangat jarang merealisasikan peran `r ftext("Calon_penerima", ft_frame_element)` dalam Konstruksi Monotransitif ([Gambar \@ref(fig:fig-5-and-6-combined)](#fig-5-and-6-combined)). Akan tetapi, untuk *menawari* khususnya, ditemukan juga (i) preferensi konstruksional yang tidak diprediksi sebelumnya (Konstruksi Monotransitif yang sejalan dengan preferensi konstruksional *menawarkan*) dan (ii) keragaraman kualitatif tipe konstruksi gramatikal yang memiliki implikasi tipologis terkait aliansi gramatikal Konstruksi Dwitransitif. Kemiripan preferensi Konstruksi Monotransitif untuk *menawari* dan *menawarkan* diasumsikan saat ini sebagai suatu fenomena "kontaminasi konstruksional" (§[\@ref(kontaminasi)](#kontaminasi)) oleh *menawarkan* (terhadap *menawari*) yang memiliki frekuensi jauh lebih tinggi dibandingkan *menawari* dan masih berkaitan secara paradigmatis dari sudut pandang morfologi. Akan tetapi, penelitian lanjutan mesti menjelajahi faktor lain terkait wacana untuk mengkaji preferensi *menawari* terhadap Konstruksi Monotransitif, yang meniadakan satu peran semantisnya (yaitu `r ftext("Calon_penerima", ft_frame_element)`). Pada tataran yang lebih luas, makalah ini menunjukkan bahwa kajian linguistik korpus kuantitatif dapat memperkaya deskripsi atas isu klasik dalam ranah (morfo)sintaksis bahasa Indonesia.
+
+# Daftar pustaka {-}
+
+
+
+
